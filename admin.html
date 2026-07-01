@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Farewell BIM 2021</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff6ef;
+      --surface: rgba(255,255,255,0.82);
+      --line: rgba(110,132,170,0.18);
+      --text: #22304a;
+      --muted: rgba(34,48,74,0.62);
+      --gold: #d48d31;
+      --blue: #6ba6ff;
+      --blue-deep: #4d79ff;
+      --red: #ff7e93;
+      --shadow: 0 24px 60px rgba(102,122,158,0.14);
+      --green: #3ecf8e;
+    }
+
+    * { box-sizing: border-box; margin: 0; }
+
+    body {
+      font-family: "Manrope", system-ui, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(107,166,255,0.22), transparent 28%),
+        radial-gradient(circle at top right, rgba(255,126,147,0.18), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(255,191,138,0.2), transparent 25%),
+        linear-gradient(180deg, #fffefb 0%, var(--bg) 52%, #fff7f4 100%);
+    }
+
+    /* ── Login ── */
+    #loginScreen {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .login-card {
+      width: min(420px, 100%);
+      padding: 36px 32px;
+      border-radius: 28px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      display: grid;
+      gap: 20px;
+    }
+
+    .login-card .eyebrow {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .login-card h1 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 2.4rem;
+      line-height: 1;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .field input {
+      font: inherit;
+      width: 100%;
+      padding: 13px 16px;
+      border: 1px solid rgba(123,143,180,0.2);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.9);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field input:focus { border-color: var(--blue); }
+
+    #loginError {
+      font-size: 0.78rem;
+      color: var(--red);
+      display: none;
+    }
+
+    .btn-primary {
+      font: inherit;
+      font-weight: 800;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--red), var(--blue-deep));
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    /* ── Dashboard ── */
+    #dashboard { display: none; }
+
+    .dash-shell {
+      width: min(1200px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 18px 0 48px;
+    }
+
+    .dash-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 22px;
+      border-radius: 22px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      flex-wrap: wrap;
+    }
+
+    .dash-brand p {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .dash-brand h1 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      line-height: 1;
+    }
+
+    .dash-actions { display: flex; gap: 10px; align-items: center; }
+
+    #refreshBtn, #logoutBtn {
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 10px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      border: 1px solid rgba(120,136,164,0.2);
+    }
+
+    #refreshBtn { background: rgba(255,255,255,0.7); color: var(--text); }
+    #logoutBtn  { background: linear-gradient(135deg, var(--red), var(--blue-deep)); color: #fff; border: none; }
+    #refreshBtn:hover, #logoutBtn:hover { transform: translateY(-1px); }
+
+    /* Stat cards row */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat-card {
+      padding: 20px 22px;
+      border-radius: 20px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .stat-card .stat-value {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 2.8rem;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .stat-card .stat-sub {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Segment panels */
+    .segments {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .segment {
+      border-radius: 22px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      overflow: hidden;
+    }
+
+    .segment.full-width { grid-column: 1 / -1; }
+
+    .seg-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .seg-head h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .seg-badge {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(107,166,255,0.12);
+      color: var(--blue-deep);
+    }
+
+    .seg-body {
+      padding: 14px 20px;
+      max-height: 340px;
+      overflow-y: auto;
+    }
+
+    .seg-body::-webkit-scrollbar { width: 6px; }
+    .seg-body::-webkit-scrollbar-thumb { background: rgba(123,143,180,0.3); border-radius: 999px; }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    thead th {
+      text-align: left;
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 0 10px 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody tr { border-bottom: 1px solid rgba(110,132,170,0.08); }
+    tbody tr:last-child { border-bottom: none; }
+
+    tbody td {
+      padding: 10px 10px 10px 0;
+      color: var(--text);
+      vertical-align: top;
+    }
+
+    .td-muted { color: var(--muted); font-size: 0.75rem; }
+
+    .type-pill {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .pill-page_view      { background: rgba(107,166,255,0.14); color: #3a6fd8; }
+    .pill-click          { background: rgba(255,191,138,0.2);  color: #b06010; }
+    .pill-quiz_start     { background: rgba(62,207,142,0.15);  color: #1a8a5a; }
+    .pill-quiz_complete  { background: rgba(62,207,142,0.28);  color: #0f6b42; }
+    .pill-invitation_view     { background: rgba(255,126,147,0.14); color: #c0304a; }
+    .pill-invitation_download { background: rgba(255,126,147,0.28); color: #9a1a30; }
+
+    .empty-row td {
+      text-align: center;
+      padding: 28px 0;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* Quiz answers accordion */
+    .quiz-row { cursor: pointer; }
+    .quiz-row:hover td { background: rgba(107,166,255,0.04); }
+
+    .quiz-answers {
+      display: none;
+      padding: 10px 0 14px 0;
+    }
+
+    .quiz-answers.open { display: block; }
+
+    .qa-item {
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+      margin-bottom: 6px;
+      font-size: 0.78rem;
+    }
+
+    .qa-item strong { display: block; color: var(--text); margin-bottom: 2px; }
+    .qa-item span   { color: var(--muted); }
+
+    /* Loading spinner */
+    .spinner {
+      display: inline-block;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(107,166,255,0.3);
+      border-top-color: var(--blue-deep);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-row td { text-align: center; padding: 24px 0; }
+
+    @media (max-width: 900px) {
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .segments { grid-template-columns: 1fr; }
+      .segment.full-width { grid-column: 1; }
+    }
+
+    @media (max-width: 560px) {
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .dash-topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── LOGIN ── -->
+  <div id="loginScreen">
+    <div class="login-card">
+      <div>
+        <p class="eyebrow">Farewell BIM 2021 Batch</p>
+        <h1>Admin Panel</h1>
+      </div>
+      <div class="field">
+        <label for="adminId">Admin ID</label>
+        <input id="adminId" type="text" placeholder="Enter ID" autocomplete="username" />
+      </div>
+      <div class="field">
+        <label for="adminPass">Password</label>
+        <input id="adminPass" type="password" placeholder="Enter password" autocomplete="current-password" />
+      </div>
+      <p id="loginError">Incorrect ID or password.</p>
+      <button class="btn-primary" id="loginBtn">Sign In</button>
+    </div>
+  </div>
+
+  <!-- ── DASHBOARD ── -->
+  <div id="dashboard">
+    <div class="dash-shell">
+
+      <header class="dash-topbar">
+        <div class="dash-brand">
+          <p>Admin Panel</p>
+          <h1>Farewell BIM 2021 — Analytics</h1>
+        </div>
+        <div class="dash-actions">
+          <button id="refreshBtn">↻ Refresh</button>
+          <button id="logoutBtn">Sign Out</button>
+        </div>
+      </header>
+
+      <!-- Stat cards -->
+      <div class="stat-row">
+        <div class="stat-card">
+          <p class="stat-label">Page Views</p>
+          <p class="stat-value" id="statViews">—</p>
+          <p class="stat-sub">Total visits</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Clicks</p>
+          <p class="stat-value" id="statClicks">—</p>
+          <p class="stat-sub">Button &amp; link taps</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Quizzes Played</p>
+          <p class="stat-value" id="statQuizzes">—</p>
+          <p class="stat-sub">Completed sessions</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Cards Downloaded</p>
+          <p class="stat-value" id="statDownloads">—</p>
+          <p class="stat-sub">Invitation JPEGs</p>
+        </div>
+      </div>
+
+      <div class="segments">
+
+        <!-- Live feed -->
+        <div class="segment full-width">
+          <div class="seg-head">
+            <h2>Live Activity Feed</h2>
+            <span class="seg-badge" id="feedCount">0 events</span>
+          </div>
+          <div class="seg-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Page</th>
+                  <th>Detail</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="feedBody">
+                <tr class="loading-row"><td colspan="4"><span class="spinner"></span>Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quiz completions -->
+        <div class="segment">
+          <div class="seg-head">
+            <h2>Quiz Responses</h2>
+            <span class="seg-badge" id="quizCount">0</span>
+          </div>
+          <div class="seg-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>Answers</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="quizBody">
+                <tr class="loading-row"><td colspan="3"><span class="spinner"></span>Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Invitation activity -->
+        <div class="segment">
+          <div class="seg-head">
+            <h2>Invitation Activity</h2>
+            <span class="seg-badge" id="inviteCount">0</span>
+          </div>
+          <div class="seg-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Senior</th>
+                  <th>Action</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="inviteBody">
+                <tr class="loading-row"><td colspan="3"><span class="spinner"></span>Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Top clicks -->
+        <div class="segment">
+          <div class="seg-head">
+            <h2>Top Clicks</h2>
+            <span class="seg-badge" id="clickCount">0</span>
+          </div>
+          <div class="seg-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Element</th>
+                  <th>Page</th>
+                  <th>Count</th>
+                </tr>
+              </thead>
+              <tbody id="clickBody">
+                <tr class="loading-row"><td colspan="3"><span class="spinner"></span>Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Page views breakdown -->
+        <div class="segment">
+          <div class="seg-head">
+            <h2>Page Views</h2>
+            <span class="seg-badge" id="pvCount">0</span>
+          </div>
+          <div class="seg-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Page</th>
+                  <th>Title</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="pvBody">
+                <tr class="loading-row"><td colspan="3"><span class="spinner"></span>Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://cldsvijsoippqzxzdvrk.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_722ZBNZSU1EOC1hW0ZQsvw_BnvFoG-O";
+    const ADMIN_ID     = "admin";
+    const ADMIN_PASS   = "sohan@admin12";
+
+    // ── Auth ──
+    const loginScreen = document.getElementById("loginScreen");
+    const dashboard   = document.getElementById("dashboard");
+
+    function checkSession() {
+      return sessionStorage.getItem("adm") === "1";
+    }
+
+    document.getElementById("loginBtn").addEventListener("click", login);
+    document.getElementById("adminPass").addEventListener("keydown", e => {
+      if (e.key === "Enter") login();
+    });
+
+    function login() {
+      const id   = document.getElementById("adminId").value.trim();
+      const pass = document.getElementById("adminPass").value;
+      const err  = document.getElementById("loginError");
+
+      if (id === ADMIN_ID && pass === ADMIN_PASS) {
+        sessionStorage.setItem("adm", "1");
+        err.style.display = "none";
+        showDashboard();
+      } else {
+        err.style.display = "block";
+      }
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.removeItem("adm");
+      dashboard.style.display = "none";
+      loginScreen.style.display = "grid";
+    });
+
+    document.getElementById("refreshBtn").addEventListener("click", loadAll);
+
+    function showDashboard() {
+      loginScreen.style.display = "none";
+      dashboard.style.display = "block";
+      loadAll();
+    }
+
+    if (checkSession()) showDashboard();
+
+    // ── Supabase fetch ──
+    async function sbFetch(path) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        }
+      });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
+    }
+
+    // ── Helpers ──
+    function fmt(iso) {
+      if (!iso) return "—";
+      const d = new Date(iso);
+      return d.toLocaleDateString("en-GB", { day: "2-digit", month: "short" })
+        + " " + d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function emptyRow(cols, msg = "No data yet") {
+      return `<tr class="empty-row"><td colspan="${cols}">${msg}</td></tr>`;
+    }
+
+    function pill(type) {
+      return `<span class="type-pill pill-${type}">${type.replace(/_/g, " ")}</span>`;
+    }
+
+    function detailText(row) {
+      const d = row.data || {};
+      if (row.type === "click")               return d.text || d.id || d.tag || "—";
+      if (row.type === "quiz_start")          return `Player: ${d.player || "?"}`;
+      if (row.type === "quiz_complete")       return `Player: ${d.player || "?"}`;
+      if (row.type === "invitation_view")     return `Senior: ${d.senior || "?"}`;
+      if (row.type === "invitation_download") return `Senior: ${d.senior || "?"}`;
+      if (row.type === "page_view")           return d.title || "—";
+      return JSON.stringify(d).slice(0, 60);
+    }
+
+    // ── Load all ──
+    async function loadAll() {
+      try {
+        const rows = await sbFetch("events?select=*&order=ts.desc&limit=500");
+        renderStats(rows);
+        renderFeed(rows);
+        renderQuiz(rows.filter(r => r.type === "quiz_complete"));
+        renderInvite(rows.filter(r => r.type === "invitation_view" || r.type === "invitation_download"));
+        renderClicks(rows.filter(r => r.type === "click"));
+        renderPageViews(rows.filter(r => r.type === "page_view"));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function renderStats(rows) {
+      document.getElementById("statViews").textContent     = rows.filter(r => r.type === "page_view").length;
+      document.getElementById("statClicks").textContent    = rows.filter(r => r.type === "click").length;
+      document.getElementById("statQuizzes").textContent   = rows.filter(r => r.type === "quiz_complete").length;
+      document.getElementById("statDownloads").textContent = rows.filter(r => r.type === "invitation_download").length;
+    }
+
+    function renderFeed(rows) {
+      document.getElementById("feedCount").textContent = `${rows.length} events`;
+      const tbody = document.getElementById("feedBody");
+      if (!rows.length) { tbody.innerHTML = emptyRow(4); return; }
+      tbody.innerHTML = rows.slice(0, 100).map(r => `
+        <tr>
+          <td>${pill(r.type)}</td>
+          <td class="td-muted">${r.page || "—"}</td>
+          <td>${detailText(r)}</td>
+          <td class="td-muted">${fmt(r.ts)}</td>
+        </tr>`).join("");
+    }
+
+    function renderQuiz(rows) {
+      document.getElementById("quizCount").textContent = rows.length;
+      const tbody = document.getElementById("quizBody");
+      if (!rows.length) { tbody.innerHTML = emptyRow(3); return; }
+      tbody.innerHTML = rows.map((r, i) => {
+        const d = r.data || {};
+        const answers = d.answers || {};
+        const qaHtml = Object.entries(answers).map(([q, a]) => `
+          <div class="qa-item"><strong>${q}</strong><span>${a}</span></div>`).join("");
+        return `
+          <tr class="quiz-row" data-qi="${i}">
+            <td><strong>${d.player || "?"}</strong></td>
+            <td><a style="color:var(--blue-deep);cursor:pointer;font-size:0.75rem" data-qi="${i}">▶ Show answers</a></td>
+            <td class="td-muted">${fmt(r.ts)}</td>
+          </tr>
+          <tr><td colspan="3" style="padding:0 0 4px">
+            <div class="quiz-answers" id="qa-${i}">${qaHtml}</div>
+          </td></tr>`;
+      }).join("");
+
+      tbody.querySelectorAll("[data-qi]").forEach(el => {
+        el.addEventListener("click", () => {
+          const box = document.getElementById(`qa-${el.dataset.qi}`);
+          if (box) box.classList.toggle("open");
+        });
+      });
+    }
+
+    function renderInvite(rows) {
+      document.getElementById("inviteCount").textContent = rows.length;
+      const tbody = document.getElementById("inviteBody");
+      if (!rows.length) { tbody.innerHTML = emptyRow(3); return; }
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td><strong>${(r.data || {}).senior || "?"}</strong></td>
+          <td>${pill(r.type)}</td>
+          <td class="td-muted">${fmt(r.ts)}</td>
+        </tr>`).join("");
+    }
+
+    function renderClicks(rows) {
+      document.getElementById("clickCount").textContent = rows.length;
+      const tbody = document.getElementById("clickBody");
+      if (!rows.length) { tbody.innerHTML = emptyRow(3); return; }
+
+      // Aggregate by text+page
+      const map = {};
+      rows.forEach(r => {
+        const d = r.data || {};
+        const key = `${d.text || d.id || d.tag || "?"}||${r.page}`;
+        map[key] = (map[key] || { text: d.text || d.id || d.tag || "?", page: r.page, count: 0 });
+        map[key].count++;
+      });
+
+      const sorted = Object.values(map).sort((a, b) => b.count - a.count).slice(0, 30);
+      tbody.innerHTML = sorted.map(c => `
+        <tr>
+          <td>${c.text}</td>
+          <td class="td-muted">${c.page}</td>
+          <td><strong>${c.count}</strong></td>
+        </tr>`).join("");
+    }
+
+    function renderPageViews(rows) {
+      document.getElementById("pvCount").textContent = rows.length;
+      const tbody = document.getElementById("pvBody");
+      if (!rows.length) { tbody.innerHTML = emptyRow(3); return; }
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td class="td-muted">${r.page || "—"}</td>
+          <td>${(r.data || {}).title || "—"}</td>
+          <td class="td-muted">${fmt(r.ts)}</td>
+        </tr>`).join("");
+    }
+  </script>
+</body>
+</html>

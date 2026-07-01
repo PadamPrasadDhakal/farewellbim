@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invitations — Farewell BIM 2021 Batch</title>
+  <meta name="description" content="Personal farewell invitations for the first BIM batch at Mechi Multiple Campus." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Modal: sized to fit card + toolbar without scrolling ── */
+    #invitationModal .modal-dialog {
+      width: min(360px, calc(100vw - 24px));
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+      background: rgba(255, 252, 245, 0.92);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(212,141,49,0.18);
+      border-radius: 28px;
+      box-shadow: 0 28px 70px rgba(140,90,30,0.18);
+      max-height: calc(100vh - 24px);
+    }
+
+    .inv-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex: none;
+    }
+
+    .inv-toolbar-name {
+      margin: 0;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      line-height: 1;
+      color: #3b2a14;
+    }
+
+    .inv-toolbar-actions { display: flex; gap: 8px; flex: none; }
+
+    /* ── Card: fixed 9:16, NO scroll ── */
+    #exportCard {
+      /* Fill remaining modal height exactly */
+      flex: 1;
+      min-height: 0;
+      aspect-ratio: 9 / 16;
+      width: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      /* Warm parchment base */
+      background:
+        radial-gradient(ellipse at 18% 12%, rgba(255,220,160,0.55) 0%, transparent 46%),
+        radial-gradient(ellipse at 82% 88%, rgba(255,160,175,0.38) 0%, transparent 42%),
+        radial-gradient(ellipse at 60% 40%, rgba(255,235,200,0.3) 0%, transparent 55%),
+        linear-gradient(155deg, #fdf6e8 0%, #fef0d6 35%, #fde8d0 68%, #fdf2e4 100%);
+      box-shadow: 0 24px 60px rgba(160,100,30,0.2);
+    }
+
+    /* Linen texture via repeating lines */
+    .ec-texture {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(180,130,60,0.04) 0px, transparent 1px, transparent 18px),
+        repeating-linear-gradient(90deg, rgba(180,130,60,0.03) 0px, transparent 1px, transparent 18px);
+    }
+
+    /* Outer border frame */
+    .ec-frame {
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(180,120,40,0.22);
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    /* Inner border frame */
+    .ec-frame-inner {
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(180,120,40,0.1);
+      border-radius: 7px;
+      pointer-events: none;
+    }
+
+    /* Corner ornaments */
+    .ec-corner {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      pointer-events: none;
+    }
+    .ec-corner-tl { top: 18px; left: 18px; border-top: 1.5px solid rgba(180,120,40,0.5); border-left: 1.5px solid rgba(180,120,40,0.5); }
+    .ec-corner-tr { top: 18px; right: 18px; border-top: 1.5px solid rgba(180,120,40,0.5); border-right: 1.5px solid rgba(180,120,40,0.5); }
+    .ec-corner-bl { bottom: 18px; left: 18px; border-bottom: 1.5px solid rgba(180,120,40,0.5); border-left: 1.5px solid rgba(180,120,40,0.5); }
+    .ec-corner-br { bottom: 18px; right: 18px; border-bottom: 1.5px solid rgba(180,120,40,0.5); border-right: 1.5px solid rgba(180,120,40,0.5); }
+
+    /* Soft top wash */
+    .ec-wash-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 38%;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,210,140,0.22) 0%, transparent 100%);
+    }
+
+    /* Content — flex column, fills card, no overflow */
+    .ec-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 28px 26px 24px;
+      overflow: hidden;
+    }
+
+    /* Top eyebrow */
+    .ec-eyebrow {
+      font-family: "Manrope", sans-serif;
+      font-size: 0.52rem;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #b87c28;
+      margin: 0 0 10px;
+    }
+
+    /* Ornamental divider */
+    .ec-rule {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: none;
+      margin: 10px 0;
+    }
+    .ec-rule::before,
+    .ec-rule::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(180,120,40,0.35), transparent);
+    }
+    .ec-rule-diamond {
+      width: 5px;
+      height: 5px;
+      background: #c8922a;
+      transform: rotate(45deg);
+      flex: none;
+      opacity: 0.6;
+    }
+
+    /* Italic invite line */
+    .ec-invite-line {
+      margin: 0 0 8px;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: rgba(80,50,15,0.5);
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* Dear label */
+    .ec-dear {
+      margin: 0 0 3px;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.54rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #b87c28;
+    }
+
+    /* Name */
+    .ec-name {
+      margin: 0 0 2px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2rem, 7.5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 0.94;
+      color: #2c1a06;
+      letter-spacing: -0.01em;
+    }
+
+    /* Message — shrinks to fit */
+    .ec-message {
+      margin: 0;
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: rgba(50,30,8,0.68);
+      font-weight: 500;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      /* strip the "Dear Name," prefix injected by JS — shown separately above */
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 8;
+    }
+
+    /* Spacer pushes details to bottom */
+    .ec-spacer { flex: 1; }
+
+    /* Detail pills */
+    .ec-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      flex: none;
+    }
+
+    .ec-detail {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(180,120,40,0.16);
+    }
+
+    .ec-detail-label {
+      display: block;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.5rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #b87c28;
+      margin-bottom: 4px;
+    }
+
+    .ec-detail-value {
+      display: block;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #2c1a06;
+      line-height: 1.2;
+    }
+
+    /* Footer */
+    .ec-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(180,120,40,0.18);
+      flex: none;
+    }
+
+    .ec-footer-left {
+      font-family: "Manrope", sans-serif;
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(80,50,15,0.45);
+    }
+
+    .ec-footer-heart {
+      font-size: 0.9rem;
+      color: #e8607a;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand-block">
+        <p class="eyebrow">Mechi Multiple Campus</p>
+        <h1>Farewell BIM 2021 Batch</h1>
+      </div>
+      <div class="top-actions">
+        <a class="ghost-link" href="index.html">← Back</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="list-toolbar">
+        <div class="search-wrap">
+          <span>Search Your Name Here</span>
+          <input id="searchInput" type="search" placeholder="Type a name…" autocomplete="off" />
+        </div>
+      </section>
+
+      <div id="invitationList" class="invitation-list"></div>
+      <div id="emptyState" class="empty-state hidden">
+        <h3>No names found</h3>
+        <p>Add seniors.csv then refresh.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Invitation Modal -->
+  <div id="invitationModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop soft-backdrop" data-close-modal></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+      <div class="inv-toolbar">
+        <h2 id="modalTitle" class="inv-toolbar-name"></h2>
+        <div class="inv-toolbar-actions">
+          <button id="downloadButton" class="ghost-link" type="button" disabled>Preparing…</button>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close" style="position:static">×</button>
+        </div>
+      </div>
+
+      <!-- 9:16 INVITATION CARD -->
+      <div id="exportCard">
+
+        <div class="ec-texture"></div>
+        <div class="ec-wash-top"></div>
+        <div class="ec-frame"></div>
+        <div class="ec-frame-inner"></div>
+        <div class="ec-corner ec-corner-tl"></div>
+        <div class="ec-corner ec-corner-tr"></div>
+        <div class="ec-corner ec-corner-bl"></div>
+        <div class="ec-corner ec-corner-br"></div>
+
+        <div class="ec-content">
+
+          <p class="ec-eyebrow">Farewell · BIM 2021 Batch · Mechi Multiple Campus</p>
+
+          <div class="ec-rule"><div class="ec-rule-diamond"></div></div>
+
+          <p class="ec-invite-line">You are cordially invited</p>
+          <p class="ec-dear">Dear</p>
+          <h2 id="cardName" class="ec-name">Senior Name</h2>
+
+          <div class="ec-rule" style="margin:10px 0 8px"><div class="ec-rule-diamond"></div></div>
+
+          <p id="cardMessage" class="ec-message"></p>
+
+          <div class="ec-spacer"></div>
+
+          <div class="ec-details">
+            <div class="ec-detail">
+              <span class="ec-detail-label">When</span>
+              <span class="ec-detail-value">Ashad 22, 2082</span>
+            </div>
+            <div class="ec-detail">
+              <span class="ec-detail-label">Where</span>
+              <span class="ec-detail-value">Dayglow Hotel, Bhadrapur</span>
+            </div>
+          </div>
+
+          <div class="ec-footer">
+            <span class="ec-footer-left">With love, your juniors</span>
+            <span class="ec-footer-heart">♥</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="tracker.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const observer = new MutationObserver(() => {
+        const cardName = document.getElementById("cardName");
+        const title    = document.getElementById("modalTitle");
+        if (cardName && title) cardName.textContent = title.textContent;
+      });
+      observer.observe(document.getElementById("modalTitle"),
+        { childList: true, characterData: true, subtree: true });
+    });
+  </script>
+  <script defer src="invitations.js"></script>
+</body>
+</html>
