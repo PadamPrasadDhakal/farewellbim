@@ -1041,18 +1041,9 @@ img {
     padding: 14px 16px;
   }
 
-  .search-find-row {
-    flex-direction: column;
-  }
-
-  .search-find-row input {
-    width: 100%;
-  }
-
   #findBtn {
-    width: 100%;
-    min-height: 46px;
-    border-radius: 12px !important;
+    width: auto;
+    flex: none;
   }
 }
 
