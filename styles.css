@@ -342,7 +342,7 @@ h1 {
 
 .sponsors-section {
   margin-top: 20px;
-  padding: 24px;
+  padding: clamp(20px, 4vw, 54px) 24px;
   border-radius: 28px;
 }
 
@@ -576,7 +576,7 @@ h1 {
 
 .invitation-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 18px;
   margin-top: 18px;
 }
@@ -866,50 +866,144 @@ h1 {
 }
 
 @keyframes float {
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
 }
 
-@media (max-width: 960px) {
-  .hero-card,
-  .bottom-cta,
-  .fun-strip,
-  .invite-now-strip,
-  .sponsor-row-pairs,
-  .memory-grid,
-  .story-grid,
-  .invitation-list {
+/* ── prevent any horizontal overflow globally ── */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* ── images never overflow ── */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ════════════════════════════════════════
+   TABLET  ≤ 1024px
+════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .hero-card {
     grid-template-columns: 1fr;
   }
 
-  .hero-card {
-    display: grid;
-  }
-
   .hero-visual {
-    min-height: 340px;
+    min-height: 300px;
   }
 
-  .bottom-cta,
-  .fun-strip {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .invite-now-strip {
-    flex-direction: column;
-    align-items: flex-start;
+  .memory-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .sponsor-row-pairs {
-    display: grid;
+    max-width: 100%;
+  }
+}
+
+/* ════════════════════════════════════════
+   SMALL TABLET / LARGE PHONE  ≤ 768px
+════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .page-shell {
+    width: min(100% - 16px, 1180px);
+    padding: 12px 0 32px;
+  }
+
+  /* topbar: brand left, actions right — still one row */
+  .topbar {
+    padding: 14px 16px;
+    border-radius: 20px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .top-actions {
+    gap: 8px;
+  }
+
+  .ghost-link,
+  .cta-button,
+  .secondary-button {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 0.82rem;
+  }
+
+  /* hero */
+  .hero-card {
+    grid-template-columns: 1fr;
+    margin-top: 14px;
+  }
+
+  .hero-copy,
+  .hero-visual {
+    border-radius: 20px;
+  }
+
+  .hero-visual {
+    min-height: 240px;
+  }
+
+  .hero-copy h2 {
+    font-size: clamp(2.2rem, 7vw, 3.6rem);
+  }
+
+  .hero-meta {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .hero-actions {
+    margin-top: 16px;
+    gap: 8px;
+  }
+
+  /* memory grid → 2 cols */
+  .memory-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .memory-card,
+  .empty-state {
+    border-radius: 20px;
+    padding: 18px;
+  }
+
+  /* strips */
+  .fun-strip,
+  .invite-now-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 20px;
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .fun-strip h2,
+  .invite-now-strip h2 {
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+  }
+
+  /* sponsors */
+  .sponsors-section {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+
+  .sponsors-heading h2 {
+    white-space: normal;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+  }
+
+  .sponsor-row-pairs {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
 
   .sponsor-row-pairs .sponsor-link-card:nth-child(1),
@@ -920,77 +1014,227 @@ h1 {
 
   .title-sponsor-link {
     width: 100%;
+    flex-direction: row;
     justify-content: center;
-    text-align: center;
-    flex-direction: column;
-  }
-
-  .sponsors-heading h2 {
-    white-space: normal;
-    font-size: clamp(2rem, 4vw, 3rem);
+    gap: 14px;
   }
 
   .sponsor-row-note p {
     width: 100%;
     text-align: center;
   }
-}
 
-@media (max-width: 680px) {
-  .page-shell {
-    width: min(100% - 18px, 1180px);
-    padding-top: 10px;
-  }
-
-  .topbar,
-  .hero-copy,
-  .hero-visual,
-  .memory-card,
-  .fun-strip,
-  .bottom-cta,
-  .invite-now-strip,
-  .sponsors-section,
-  .search-wrap,
-  .modal-dialog,
-  .invitation-card,
-  .quiz-panel {
-    border-radius: 20px;
-  }
-
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-meta,
-  .details-grid,
-  .memory-grid,
-  .story-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .invite-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .card-footer {
-    flex-direction: column;
+  /* quiz modal */
+  .quiz-modal .modal-dialog {
+    width: min(480px, calc(100vw - 16px));
+    border-radius: 22px;
+    padding: 16px;
   }
 
   .modal {
-    padding: 10px;
+    padding: 8px;
   }
 
-  .invitation-card {
-    padding: 18px;
+  /* search / find row */
+  .search-wrap {
+    border-radius: 18px;
+    padding: 14px 16px;
   }
 
-  .card-name {
-    font-size: clamp(2.3rem, 10vw, 3.2rem);
+  .search-find-row {
+    flex-direction: column;
   }
 
-  .invitation-card-scroll {
-    padding-right: 0;
+  .search-find-row input {
+    width: 100%;
+  }
+
+  #findBtn {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 12px !important;
+  }
+}
+
+/* ════════════════════════════════════════
+   PHONE  ≤ 480px
+════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .page-shell {
+    width: min(100% - 12px, 1180px);
+    padding: 10px 0 28px;
+  }
+
+  /* topbar stacks on very small screens */
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px;
+    border-radius: 18px;
+    gap: 10px;
+  }
+
+  .top-actions {
+    width: 100%;
+  }
+
+  .top-actions .ghost-link,
+  .top-actions .ghost-button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
+  }
+
+  /* hero */
+  .hero-copy h2 {
+    font-size: clamp(2rem, 8.5vw, 3rem);
+    max-width: 100%;
+  }
+
+  .hero-visual {
+    min-height: 200px;
+  }
+
+  .hero-meta {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .cta-button,
+  .hero-actions .secondary-button {
+    width: 100%;
+  }
+
+  /* memory grid → 1 col */
+  .memory-grid,
+  .story-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .memory-card h3,
+  .empty-state h3 {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  /* strips */
+  .fun-strip .cta-button,
+  .invite-now-strip .cta-button {
+    width: 100%;
+  }
+
+  /* sponsors */
+  .title-sponsor-link {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .sponsor-card {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .sponsor-card h3 {
+    font-size: 1.3rem;
+  }
+
+  /* quiz modal */
+  .quiz-modal .modal-dialog {
+    width: calc(100vw - 12px);
+    border-radius: 18px;
+    padding: 14px;
+  }
+
+  .quiz-panel h2 {
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+  }
+
+  .quiz-actions {
+    flex-direction: column;
+  }
+
+  .quiz-actions .secondary-button,
+  .quiz-actions .cta-button,
+  #startQuizButton,
+  #quizAgainButton {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .quiz-field input {
+    padding: 13px 14px;
+  }
+
+  /* invitation modal */
+  #invitationModal .modal-dialog {
+    width: calc(100vw - 12px) !important;
+    border-radius: 18px !important;
+    padding: 10px !important;
+  }
+
+  /* card footer */
+  .card-footer {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* invite-item stacks */
+  .invite-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .mini-button {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  /* section headings */
+  .section-heading h2,
+  .fun-strip h2,
+  .bottom-cta h3 {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+}
+
+/* ════════════════════════════════════════
+   VERY SMALL  ≤ 360px
+════════════════════════════════════════ */
+@media (max-width: 360px) {
+  .page-shell {
+    width: calc(100% - 10px);
+  }
+
+  .topbar {
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+
+  .hero-copy h2 {
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+  }
+
+  .ghost-link,
+  .cta-button,
+  .secondary-button {
+    font-size: 0.78rem;
+    padding: 0 12px;
+  }
+
+  .sponsor-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
   }
 }

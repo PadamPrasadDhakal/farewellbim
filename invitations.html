@@ -288,8 +288,14 @@
     <main>
       <section class="list-toolbar">
         <div class="search-wrap">
-          <span>Search Your Name Here</span>
-          <input id="searchInput" type="search" placeholder="Type a name…" autocomplete="off" />
+          <span>Enter Your Name</span>
+          <div style="display:flex;gap:10px" class="search-find-row">
+            <input id="searchInput" type="text" placeholder="Type your full name exactly…" autocomplete="off" />
+            <button id="findBtn" class="cta-button" style="flex:none;min-height:unset;padding:0 20px;border-radius:14px">Find</button>
+          </div>
+          <p id="notFoundMsg" style="display:none;margin:0;font-size:0.82rem;color:#c0304a;font-weight:700">
+            ✕ Your name was not found in the list. Please check the spelling and try again.
+          </p>
         </div>
       </section>
 

@@ -174,7 +174,7 @@
     /* Stat cards row */
     .stat-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 14px;
       margin-top: 18px;
     }
@@ -307,6 +307,9 @@
     .pill-quiz_complete  { background: rgba(62,207,142,0.28);  color: #0f6b42; }
     .pill-invitation_view     { background: rgba(255,126,147,0.14); color: #c0304a; }
     .pill-invitation_download { background: rgba(255,126,147,0.28); color: #9a1a30; }
+    .pill-generated   { background: rgba(62,207,142,0.18);  color: #0f6b42; }
+    .pill-downloaded  { background: rgba(62,207,142,0.32);  color: #0a4f30; }
+    .pill-not_found   { background: rgba(255,126,147,0.18); color: #b02040; }
 
     .empty-row td {
       text-align: center;
@@ -355,7 +358,7 @@
     .loading-row td { text-align: center; padding: 24px 0; }
 
     @media (max-width: 900px) {
-      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .stat-row { grid-template-columns: repeat(3, 1fr); }
       .segments { grid-template-columns: 1fr; }
       .segment.full-width { grid-column: 1; }
     }
@@ -425,9 +428,37 @@
           <p class="stat-value" id="statDownloads">—</p>
           <p class="stat-sub">Invitation JPEGs</p>
         </div>
+        <div class="stat-card">
+          <p class="stat-label">Not Found</p>
+          <p class="stat-value" id="statNotFound">—</p>
+          <p class="stat-sub">Name not on list</p>
+        </div>
       </div>
 
       <div class="segments">
+
+        <!-- Invitation Attempts -->
+        <div class="segment full-width">
+          <div class="seg-head">
+            <h2>Invitation Attempts</h2>
+            <span class="seg-badge" id="attemptsCount">0</span>
+          </div>
+          <div class="seg-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Entered Name</th>
+                  <th>Matched Name</th>
+                  <th>Status</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="attemptsBody">
+                <tr class="loading-row"><td colspan="4"><span class="spinner"></span>Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
         <!-- Live feed -->
         <div class="segment full-width">
@@ -642,6 +673,7 @@
         renderInvite(rows.filter(r => r.type === "invitation_view" || r.type === "invitation_download"));
         renderClicks(rows.filter(r => r.type === "click"));
         renderPageViews(rows.filter(r => r.type === "page_view"));
+        await renderAttempts();
       } catch (e) {
         console.error(e);
       }
@@ -652,6 +684,7 @@
       document.getElementById("statClicks").textContent    = rows.filter(r => r.type === "click").length;
       document.getElementById("statQuizzes").textContent   = rows.filter(r => r.type === "quiz_complete").length;
       document.getElementById("statDownloads").textContent = rows.filter(r => r.type === "invitation_download").length;
+      document.getElementById("statNotFound").textContent   = rows.filter(r => r.type === "invitation_attempt" && (r.data||{}).status === "not_found").length;
     }
 
     function renderFeed(rows) {
@@ -740,6 +773,32 @@
           <td>${(r.data || {}).title || "—"}</td>
           <td class="td-muted">${fmt(r.ts)}</td>
         </tr>`).join("");
+    }
+
+    async function renderAttempts() {
+      const tbody = document.getElementById("attemptsBody");
+      try {
+        const rows = await sbFetch("invitation_attempts?select=*&order=ts.desc&limit=500");
+        document.getElementById("attemptsCount").textContent = rows.length;
+
+        // Update not-found stat from this table
+        document.getElementById("statNotFound").textContent =
+          rows.filter(r => r.status === "not_found").length;
+        // Update downloads stat from this table
+        document.getElementById("statDownloads").textContent =
+          rows.filter(r => r.status === "downloaded").length;
+
+        if (!rows.length) { tbody.innerHTML = emptyRow(4); return; }
+        tbody.innerHTML = rows.map(r => `
+          <tr>
+            <td><strong>${r.entered_name || "—"}</strong></td>
+            <td>${r.matched_name || '<span class="td-muted">—</span>'}</td>
+            <td>${pill(r.status)}</td>
+            <td class="td-muted">${fmt(r.ts)}</td>
+          </tr>`).join("");
+      } catch {
+        tbody.innerHTML = emptyRow(4, "Failed to load");
+      }
     }
   </script>
 </body>

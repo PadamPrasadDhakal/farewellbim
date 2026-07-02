@@ -17,3 +17,21 @@ create policy "allow insert" on events
 
 create policy "allow read" on events
   for select to anon using (true);
+
+-- Invitation attempts table (testinvitation.html)
+create table if not exists invitation_attempts (
+  id            bigint generated always as identity primary key,
+  entered_name  text        not null,
+  matched_name  text,
+  status        text        not null,   -- 'generated' | 'not_found' | 'downloaded'
+  page          text,
+  ts            timestamptz default now()
+);
+
+alter table invitation_attempts enable row level security;
+
+create policy "allow insert attempts" on invitation_attempts
+  for insert to anon with check (true);
+
+create policy "allow read attempts" on invitation_attempts
+  for select to anon using (true);
