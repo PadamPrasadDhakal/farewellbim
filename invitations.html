@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* ── Modal: sized to fit card + toolbar without scrolling ── */
     #invitationModal .modal-dialog {
       width: min(360px, calc(100vw - 24px));
       padding: 12px;
@@ -18,7 +17,7 @@
       flex-direction: column;
       gap: 10px;
       overflow: hidden;
-      background: rgba(255, 252, 245, 0.92);
+      background: rgba(255,252,245,0.92);
       backdrop-filter: blur(24px);
       border: 1px solid rgba(212,141,49,0.18);
       border-radius: 28px;
@@ -26,38 +25,16 @@
       max-height: calc(100vh - 24px);
     }
 
-    .inv-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex: none;
-    }
-
-    .inv-toolbar-name {
-      margin: 0;
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-size: clamp(1.2rem, 3vw, 1.6rem);
-      line-height: 1;
-      color: #3b2a14;
-    }
-
+    .inv-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex: none; }
+    .inv-toolbar-name { margin: 0; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.2rem, 3vw, 1.6rem); line-height: 1; color: #3b2a14; }
     .inv-toolbar-actions { display: flex; gap: 8px; flex: none; }
 
-    /* ── Card: fixed 9:16, NO scroll ── */
     #exportCard {
-      /* Fill remaining modal height exactly */
-      flex: 1;
-      min-height: 0;
-      aspect-ratio: 9 / 16;
-      width: 100%;
-      border-radius: 18px;
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      flex-direction: column;
+      flex: 1; min-height: 0;
+      aspect-ratio: 9 / 16; width: 100%;
+      border-radius: 18px; overflow: hidden;
+      position: relative; display: flex; flex-direction: column;
       font-family: "Cormorant Garamond", Georgia, serif;
-      /* Warm parchment base */
       background:
         radial-gradient(ellipse at 18% 12%, rgba(255,220,160,0.55) 0%, transparent 46%),
         radial-gradient(ellipse at 82% 88%, rgba(255,160,175,0.38) 0%, transparent 42%),
@@ -66,211 +43,32 @@
       box-shadow: 0 24px 60px rgba(160,100,30,0.2);
     }
 
-    /* Linen texture via repeating lines */
-    .ec-texture {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        repeating-linear-gradient(0deg, rgba(180,130,60,0.04) 0px, transparent 1px, transparent 18px),
-        repeating-linear-gradient(90deg, rgba(180,130,60,0.03) 0px, transparent 1px, transparent 18px);
-    }
-
-    /* Outer border frame */
-    .ec-frame {
-      position: absolute;
-      inset: 12px;
-      border: 1px solid rgba(180,120,40,0.22);
-      border-radius: 10px;
-      pointer-events: none;
-    }
-
-    /* Inner border frame */
-    .ec-frame-inner {
-      position: absolute;
-      inset: 16px;
-      border: 1px solid rgba(180,120,40,0.1);
-      border-radius: 7px;
-      pointer-events: none;
-    }
-
-    /* Corner ornaments */
-    .ec-corner {
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      pointer-events: none;
-    }
+    .ec-texture { position: absolute; inset: 0; pointer-events: none; background-image: repeating-linear-gradient(0deg, rgba(180,130,60,0.04) 0px, transparent 1px, transparent 18px), repeating-linear-gradient(90deg, rgba(180,130,60,0.03) 0px, transparent 1px, transparent 18px); }
+    .ec-frame { position: absolute; inset: 12px; border: 1px solid rgba(180,120,40,0.22); border-radius: 10px; pointer-events: none; }
+    .ec-frame-inner { position: absolute; inset: 16px; border: 1px solid rgba(180,120,40,0.1); border-radius: 7px; pointer-events: none; }
+    .ec-corner { position: absolute; width: 22px; height: 22px; pointer-events: none; }
     .ec-corner-tl { top: 18px; left: 18px; border-top: 1.5px solid rgba(180,120,40,0.5); border-left: 1.5px solid rgba(180,120,40,0.5); }
     .ec-corner-tr { top: 18px; right: 18px; border-top: 1.5px solid rgba(180,120,40,0.5); border-right: 1.5px solid rgba(180,120,40,0.5); }
     .ec-corner-bl { bottom: 18px; left: 18px; border-bottom: 1.5px solid rgba(180,120,40,0.5); border-left: 1.5px solid rgba(180,120,40,0.5); }
     .ec-corner-br { bottom: 18px; right: 18px; border-bottom: 1.5px solid rgba(180,120,40,0.5); border-right: 1.5px solid rgba(180,120,40,0.5); }
-
-    /* Soft top wash */
-    .ec-wash-top {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 38%;
-      pointer-events: none;
-      background: linear-gradient(180deg, rgba(255,210,140,0.22) 0%, transparent 100%);
-    }
-
-    /* Content — flex column, fills card, no overflow */
-    .ec-content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      padding: 28px 26px 24px;
-      overflow: hidden;
-    }
-
-    /* Top eyebrow */
-    .ec-eyebrow {
-      font-family: "Manrope", sans-serif;
-      font-size: 0.52rem;
-      font-weight: 800;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: #b87c28;
-      margin: 0 0 10px;
-    }
-
-    /* Ornamental divider */
-    .ec-rule {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: none;
-      margin: 10px 0;
-    }
-    .ec-rule::before,
-    .ec-rule::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(180,120,40,0.35), transparent);
-    }
-    .ec-rule-diamond {
-      width: 5px;
-      height: 5px;
-      background: #c8922a;
-      transform: rotate(45deg);
-      flex: none;
-      opacity: 0.6;
-    }
-
-    /* Italic invite line */
-    .ec-invite-line {
-      margin: 0 0 8px;
-      font-style: italic;
-      font-size: 0.9rem;
-      color: rgba(80,50,15,0.5);
-      font-weight: 500;
-      text-align: center;
-    }
-
-    /* Dear label */
-    .ec-dear {
-      margin: 0 0 3px;
-      font-family: "Manrope", sans-serif;
-      font-size: 0.54rem;
-      font-weight: 800;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #b87c28;
-    }
-
-    /* Name */
-    .ec-name {
-      margin: 0 0 2px;
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(2rem, 7.5vw, 2.8rem);
-      font-weight: 700;
-      line-height: 0.94;
-      color: #2c1a06;
-      letter-spacing: -0.01em;
-    }
-
-    /* Message — shrinks to fit */
-    .ec-message {
-      margin: 0;
-      font-size: 0.78rem;
-      line-height: 1.6;
-      color: rgba(50,30,8,0.68);
-      font-weight: 500;
-      font-family: "Cormorant Garamond", Georgia, serif;
-      /* strip the "Dear Name," prefix injected by JS — shown separately above */
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 8;
-    }
-
-    /* Spacer pushes details to bottom */
+    .ec-wash-top { position: absolute; top: 0; left: 0; right: 0; height: 38%; pointer-events: none; background: linear-gradient(180deg, rgba(255,210,140,0.22) 0%, transparent 100%); }
+    .ec-content { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; padding: 28px 26px 24px; overflow: hidden; }
+    .ec-eyebrow { font-family: "Manrope", sans-serif; font-size: 0.52rem; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase; color: #b87c28; margin: 0 0 10px; }
+    .ec-rule { display: flex; align-items: center; gap: 8px; flex: none; margin: 10px 0; }
+    .ec-rule::before, .ec-rule::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(180,120,40,0.35), transparent); }
+    .ec-rule-diamond { width: 5px; height: 5px; background: #c8922a; transform: rotate(45deg); flex: none; opacity: 0.6; }
+    .ec-invite-line { margin: 0 0 8px; font-style: italic; font-size: 0.9rem; color: rgba(80,50,15,0.5); font-weight: 500; text-align: center; }
+    .ec-dear { margin: 0 0 3px; font-family: "Manrope", sans-serif; font-size: 0.54rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: #b87c28; }
+    .ec-name { margin: 0 0 2px; font-family: "Playfair Display", Georgia, serif; font-size: clamp(2rem, 7.5vw, 2.8rem); font-weight: 700; line-height: 0.94; color: #2c1a06; letter-spacing: -0.01em; }
+    .ec-message { margin: 0; font-size: 0.78rem; line-height: 1.6; color: rgba(50,30,8,0.68); font-weight: 500; font-family: "Cormorant Garamond", Georgia, serif; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 8; }
     .ec-spacer { flex: 1; }
-
-    /* Detail pills */
-    .ec-details {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      flex: none;
-    }
-
-    .ec-detail {
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(180,120,40,0.16);
-    }
-
-    .ec-detail-label {
-      display: block;
-      font-family: "Manrope", sans-serif;
-      font-size: 0.5rem;
-      font-weight: 800;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #b87c28;
-      margin-bottom: 4px;
-    }
-
-    .ec-detail-value {
-      display: block;
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: #2c1a06;
-      line-height: 1.2;
-    }
-
-    /* Footer */
-    .ec-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(180,120,40,0.18);
-      flex: none;
-    }
-
-    .ec-footer-left {
-      font-family: "Manrope", sans-serif;
-      font-size: 0.5rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(80,50,15,0.45);
-    }
-
-    .ec-footer-heart {
-      font-size: 0.9rem;
-      color: #e8607a;
-      line-height: 1;
-    }
+    .ec-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: none; }
+    .ec-detail { padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,0.55); border: 1px solid rgba(180,120,40,0.16); }
+    .ec-detail-label { display: block; font-family: "Manrope", sans-serif; font-size: 0.5rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: #b87c28; margin-bottom: 4px; }
+    .ec-detail-value { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 0.92rem; font-weight: 600; color: #2c1a06; line-height: 1.2; }
+    .ec-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(180,120,40,0.18); flex: none; }
+    .ec-footer-left { font-family: "Manrope", sans-serif; font-size: 0.5rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(80,50,15,0.45); }
+    .ec-footer-heart { font-size: 0.9rem; color: #e8607a; line-height: 1; }
   </style>
 </head>
 <body>
@@ -289,25 +87,19 @@
       <section class="list-toolbar">
         <div class="search-wrap">
           <span>Enter Your Name</span>
-          <div style="display:flex;gap:10px" class="search-find-row">
-            <input id="searchInput" type="text" placeholder="Type your full name exactly…" autocomplete="off" />
+          <div style="display:flex;gap:10px">
+            <input id="searchInput" type="text" placeholder="Type your full name…" autocomplete="off" />
             <button id="findBtn" class="cta-button" style="flex:none;min-height:unset;padding:0 20px;border-radius:14px">Find</button>
           </div>
           <p id="notFoundMsg" style="display:none;margin:0;font-size:0.82rem;color:#c0304a;font-weight:700">
-            ✕ Your name was not found in the list. Please check the spelling and try again.
+            ✕ Name not found. Please check spelling and try again.
           </p>
         </div>
       </section>
-
-      <div id="invitationList" class="invitation-list"></div>
-      <div id="emptyState" class="empty-state hidden">
-        <h3>No names found</h3>
-        <p>Add seniors.csv then refresh.</p>
-      </div>
     </main>
   </div>
 
-  <!-- Invitation Modal -->
+  <!-- Modal -->
   <div id="invitationModal" class="modal hidden" aria-hidden="true">
     <div class="modal-backdrop soft-backdrop" data-close-modal></div>
     <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -320,9 +112,7 @@
         </div>
       </div>
 
-      <!-- 9:16 INVITATION CARD -->
       <div id="exportCard">
-
         <div class="ec-texture"></div>
         <div class="ec-wash-top"></div>
         <div class="ec-frame"></div>
@@ -331,58 +121,228 @@
         <div class="ec-corner ec-corner-tr"></div>
         <div class="ec-corner ec-corner-bl"></div>
         <div class="ec-corner ec-corner-br"></div>
-
         <div class="ec-content">
-
           <p class="ec-eyebrow">Farewell · BIM 2021 Batch · Mechi Multiple Campus</p>
-
           <div class="ec-rule"><div class="ec-rule-diamond"></div></div>
-
           <p class="ec-invite-line">You are cordially invited</p>
-          <p class="ec-dear">Dear</p>
-          <h2 id="cardName" class="ec-name">Senior Name</h2>
-
+          <p id="cardDear" class="ec-dear">Dear</p>
+          <h2 id="cardName" class="ec-name">Name</h2>
           <div class="ec-rule" style="margin:10px 0 8px"><div class="ec-rule-diamond"></div></div>
-
           <p id="cardMessage" class="ec-message"></p>
-
           <div class="ec-spacer"></div>
-
           <div class="ec-details">
             <div class="ec-detail">
               <span class="ec-detail-label">When</span>
-              <span class="ec-detail-value">Ashad 29, 2082</span>
+              <span class="ec-detail-value">Ashad 22, 2082</span>
             </div>
             <div class="ec-detail">
               <span class="ec-detail-label">Where</span>
               <span class="ec-detail-value">Dayglow Hotel, Bhadrapur</span>
             </div>
           </div>
-
           <div class="ec-footer">
-            <span class="ec-footer-left">With love, your juniors</span>
+            <span id="cardFooter" class="ec-footer-left">With love, your juniors</span>
             <span class="ec-footer-heart">♥</span>
           </div>
-
         </div>
       </div>
 
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="tracker.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const observer = new MutationObserver(() => {
-        const cardName = document.getElementById("cardName");
-        const title    = document.getElementById("modalTitle");
-        if (cardName && title) cardName.textContent = title.textContent;
-      });
-      observer.observe(document.getElementById("modalTitle"),
-        { childList: true, characterData: true, subtree: true });
+    const MSG_SENIOR  = "With hearts full of gratitude, we invite you to a farewell that carries the memories you helped create. You guided us through campus life with patience, kindness, and care, and you made Mechi Campus feel like home. Please join us as we celebrate your journey, our memories, and the bond we will always treasure.";
+    const MSG_TEACHER = "It is with the deepest respect and heartfelt gratitude that we invite you to our farewell celebration. Your wisdom, dedication, and unwavering support have shaped us into who we are today. Every lesson you taught went far beyond the classroom — you inspired us to dream bigger, work harder, and carry ourselves with integrity. Please grace us with your presence as we honour the journey we have shared together.";
+
+    const SENIORS = [
+      "AADESH KC","AAYUSHMA BARAL","ABISHEK NIROULA","ADITYA SHAH",
+      "ANAMIKA REGMI","ANKIT ACHARYA","ANKIT RAJ KADEL","ARYAN KHADKA",
+      "ARYAN TAJPURIYA","ASHISH BHANDARI","BHAWANA KADARIYA","BIDHAN DULAL",
+      "BIKESH DHAKAL","BINISHA RIJAL","BISHNU NEPAL","BIVEK NEPAL",
+      "DHANSARI RAJBANSHI","DIKSHYA NIROULA","DIKSHYA THAPA","DINO LIMBU",
+      "DIPASRI SARI RAJBANSHI","GOKARNA GAUTAM","KIRAN RAJBANSHI","KRITI BAN",
+      "LIZA GIRI","MINA DHITAL","NIMA TAMANG","NISHA DHUNGANA",
+      "NISHA KAMATI","NISTA BHATTARAI","NITESH KATUWAL","PIYUSH AGARWAL",
+      "PRAJAN BHANDARI","PRAJITA POUDEL","PRAKRITI KARKI","PRAVESH SHAKYA",
+      "PRAYASH PARAJULI","PREDIKSHY A KARKI","PRERANA Kumari RAJBANSHI","PUNAM BHATTARAI",
+      "RESIKA POKHAREL","SAKCHHM BHATTARAI","SALINA THAPA","SANDEEP PATHAK",
+      "SANJAY RAJBANSHI","SAURAV OSTI","SHRADDHA PYAKUREL","SHREYA THAMI",
+      "SITA DEVI RAJBANSHI","SOMU KUNDU","SUNAINA MANDAL","SUPRIYA ACHARYA",
+      "YAMUNA ADHIKARI","YOJANA POUDEL"
+    ];
+
+    const TEACHERS = [
+      "Harish Luitel","Bishal Ghimire","Pramod Kumar Soni","Prakash koirala",
+      "Raju Poudel","Sunil Sharma","Sameer Sitoula","Nagendra Prasain",
+      "Kavita Poudyal","Rajendra Adhikari","Shital Kumar Mandal","Samjhana Budhathoki",
+      "Pankaj Uprety","Krishna Prasad Acharya","Karna Tamang"
+    ];
+
+    const exportCard  = document.getElementById("exportCard");
+    const modal       = document.getElementById("invitationModal");
+    const modalTitle  = document.getElementById("modalTitle");
+    const cardDear    = document.getElementById("cardDear");
+    const cardName    = document.getElementById("cardName");
+    const cardMessage = document.getElementById("cardMessage");
+    const cardFooter  = document.getElementById("cardFooter");
+    const downloadBtn = document.getElementById("downloadButton");
+    const searchInput = document.getElementById("searchInput");
+    const findBtn     = document.getElementById("findBtn");
+    const notFoundMsg = document.getElementById("notFoundMsg");
+
+    let selectedName = null;
+    let selectedRole = null;
+    let downloadURL  = null;
+
+    function normalize(s) {
+      return s.toLowerCase().replace(/\s+/g, " ").trim();
+    }
+
+    function findPerson(input) {
+      const key = normalize(input);
+      const s = SENIORS.find(n => normalize(n) === key);
+      if (s) return { name: s, role: "senior" };
+      const t = TEACHERS.find(n => normalize(n) === key);
+      if (t) return { name: t, role: "teacher" };
+      return null;
+    }
+
+    function logAttempt(entered, status, matched, role) {
+      fetch(SUPABASE_URL + "/rest/v1/invitation_attempts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + SUPABASE_KEY,
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({
+          entered_name: entered,
+          matched_name: matched || null,
+          status: status,
+          role: role || null,
+          page: "invitations.html",
+          ts: new Date().toISOString()
+        })
+      }).catch(function() {});
+    }
+
+    function applyTheme(role) {
+      if (role === "teacher") {
+        exportCard.style.background = [
+          "radial-gradient(ellipse at 15% 10%, rgba(255,215,80,0.55) 0%, transparent 44%)",
+          "radial-gradient(ellipse at 85% 85%, rgba(212,141,49,0.45) 0%, transparent 42%)",
+          "radial-gradient(ellipse at 55% 45%, rgba(255,235,120,0.28) 0%, transparent 52%)",
+          "linear-gradient(155deg, #fdf3c8 0%, #fde98a 28%, #f5d060 58%, #faedb0 100%)"
+        ].join(",");
+      } else {
+        exportCard.style.background = [
+          "radial-gradient(ellipse at 18% 12%, rgba(255,220,160,0.55) 0%, transparent 46%)",
+          "radial-gradient(ellipse at 82% 88%, rgba(255,160,175,0.38) 0%, transparent 42%)",
+          "radial-gradient(ellipse at 60% 40%, rgba(255,235,200,0.3) 0%, transparent 55%)",
+          "linear-gradient(155deg, #fdf6e8 0%, #fef0d6 35%, #fde8d0 68%, #fdf2e4 100%)"
+        ].join(",");
+      }
+    }
+
+    async function openCard(name, role) {
+      selectedName = name;
+      selectedRole = role;
+
+      applyTheme(role);
+
+      modalTitle.textContent  = name;
+      cardName.textContent    = name;
+      cardDear.textContent    = role === "teacher" ? "Respected" : "Dear";
+      cardMessage.textContent = role === "teacher" ? MSG_TEACHER : MSG_SENIOR;
+      cardFooter.textContent  = role === "teacher" ? "With respect & gratitude, BIM 2021 Batch" : "With love, your juniors";
+
+      modal.classList.remove("hidden");
+      modal.setAttribute("aria-hidden", "false");
+
+      downloadBtn.disabled    = true;
+      downloadBtn.textContent = "Preparing…";
+
+      // wait for fonts + layout
+      await document.fonts.ready;
+      await new Promise(function(r) { requestAnimationFrame(function() { requestAnimationFrame(r); }); });
+
+      try {
+        const rect = exportCard.getBoundingClientRect();
+        console.log("card rect:", rect.width, rect.height);
+        const canvas = await html2canvas(exportCard, {
+          backgroundColor: null,
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: true,
+          width: exportCard.offsetWidth,
+          height: exportCard.offsetHeight
+        });
+        console.log("canvas:", canvas.width, canvas.height);
+        const blob = await new Promise(function(r) { canvas.toBlob(r, "image/jpeg", 0.95); });
+        if (!blob) { console.error("blob is null"); return; }
+        if (downloadURL) URL.revokeObjectURL(downloadURL);
+        downloadURL = URL.createObjectURL(blob);
+        downloadBtn.disabled    = false;
+        downloadBtn.textContent = "Download JPEG";
+      } catch(e) {
+        console.error("html2canvas error:", e);
+        downloadBtn.textContent = "Error — retry";
+      }
+    }
+
+    function closeCard() {
+      modal.classList.add("hidden");
+      modal.setAttribute("aria-hidden", "true");
+      selectedName = null;
+      selectedRole = null;
+      if (downloadURL) { URL.revokeObjectURL(downloadURL); downloadURL = null; }
+    }
+
+    function handleFind() {
+      var input = searchInput.value.trim();
+      notFoundMsg.style.display = "none";
+      if (!input) return;
+
+      var found = findPerson(input);
+      if (found) {
+        logAttempt(input, "generated", found.name, found.role);
+        openCard(found.name, found.role);
+      } else {
+        logAttempt(input, "not_found", null, null);
+        notFoundMsg.style.display = "block";
+      }
+    }
+
+    findBtn.addEventListener("click", handleFind);
+
+    searchInput.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") handleFind();
+    });
+
+    searchInput.addEventListener("input", function() {
+      notFoundMsg.style.display = "none";
+    });
+
+    modal.addEventListener("click", function(e) {
+      if (e.target.hasAttribute("data-close-modal")) closeCard();
+    });
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeCard();
+    });
+
+    downloadBtn.addEventListener("click", function() {
+      if (!selectedName || !downloadURL) return;
+      logAttempt(searchInput.value.trim(), "downloaded", selectedName, selectedRole);
+      var a = document.createElement("a");
+      a.href     = downloadURL;
+      a.download = "Farewell-BIM-2021-" + selectedName.replace(/[^a-z0-9]+/gi, "-").toLowerCase() + ".jpeg";
+      a.click();
     });
   </script>
-  <script defer src="invitations.js"></script>
 </body>
 </html>

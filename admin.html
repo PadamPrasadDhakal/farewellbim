@@ -310,6 +310,8 @@
     .pill-generated   { background: rgba(62,207,142,0.18);  color: #0f6b42; }
     .pill-downloaded  { background: rgba(62,207,142,0.32);  color: #0a4f30; }
     .pill-not_found   { background: rgba(255,126,147,0.18); color: #b02040; }
+    .pill-senior      { background: rgba(107,166,255,0.14); color: #3a6fd8; }
+    .pill-teacher     { background: rgba(212,141,49,0.18);  color: #8a5200; }
 
     .empty-row td {
       text-align: center;
@@ -449,12 +451,13 @@
                 <tr>
                   <th>Entered Name</th>
                   <th>Matched Name</th>
+                  <th>Role</th>
                   <th>Status</th>
                   <th>Time</th>
                 </tr>
               </thead>
               <tbody id="attemptsBody">
-                <tr class="loading-row"><td colspan="4"><span class="spinner"></span>Loading…</td></tr>
+                <tr class="loading-row"><td colspan="5"><span class="spinner"></span>Loading…</td></tr>
               </tbody>
             </table>
           </div>
@@ -788,16 +791,17 @@
         document.getElementById("statDownloads").textContent =
           rows.filter(r => r.status === "downloaded").length;
 
-        if (!rows.length) { tbody.innerHTML = emptyRow(4); return; }
+        if (!rows.length) { tbody.innerHTML = emptyRow(5); return; }
         tbody.innerHTML = rows.map(r => `
           <tr>
             <td><strong>${r.entered_name || "—"}</strong></td>
             <td>${r.matched_name || '<span class="td-muted">—</span>'}</td>
+            <td>${r.role ? pill(r.role) : '<span class="td-muted">—</span>'}</td>
             <td>${pill(r.status)}</td>
             <td class="td-muted">${fmt(r.ts)}</td>
           </tr>`).join("");
       } catch {
-        tbody.innerHTML = emptyRow(4, "Failed to load");
+        tbody.innerHTML = emptyRow(5, "Failed to load");
       }
     }
   </script>

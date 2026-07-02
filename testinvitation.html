@@ -32,104 +32,43 @@
     }
 
     .entry-card .eyebrow { margin: 0; }
+    .entry-card h2 { font-size: clamp(2.2rem, 5vw, 3.2rem); color: var(--text); margin: 0; }
+    .entry-card > p { margin: 0; color: var(--muted); line-height: 1.65; font-size: 0.95rem; }
 
-    .entry-card h2 {
-      font-size: clamp(2.2rem, 5vw, 3.2rem);
-      color: var(--text);
-      margin: 0;
-    }
-
-    .entry-card > p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 0.95rem;
-    }
-
-    .name-field {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .name-field label {
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-
+    .name-field { display: flex; flex-direction: column; gap: 8px; }
+    .name-field label { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
     .name-field input {
-      width: 100%;
-      border: 1px solid rgba(123,143,180,0.2);
-      border-radius: 16px;
-      padding: 15px 18px;
-      font-size: 1.05rem;
-      color: var(--text);
-      background: rgba(255,255,255,0.94);
-      outline: none;
-      transition: border-color 0.2s;
+      width: 100%; border: 1px solid rgba(123,143,180,0.2); border-radius: 16px;
+      padding: 15px 18px; font-size: 1.05rem; color: var(--text);
+      background: rgba(255,255,255,0.94); outline: none; transition: border-color 0.2s;
     }
-
     .name-field input:focus { border-color: rgba(212,141,49,0.45); }
     .name-field input::placeholder { color: rgba(34,48,74,0.38); }
 
     #generateBtn {
-      width: 100%;
-      min-height: 52px;
-      border: none;
-      border-radius: 999px;
-      font-size: 1rem;
-      font-weight: 800;
-      color: #fff;
+      width: 100%; min-height: 52px; border: none; border-radius: 999px;
+      font-size: 1rem; font-weight: 800; color: #fff;
       background: linear-gradient(135deg, var(--red), var(--blue-deep));
-      cursor: pointer;
-      transition: transform 0.2s, opacity 0.2s;
+      cursor: pointer; transition: transform 0.2s, opacity 0.2s;
     }
-
     #generateBtn:hover:not(:disabled) { transform: translateY(-2px); }
     #generateBtn:disabled { opacity: 0.55; cursor: not-allowed; }
 
-    /* ── Not-found message ── */
     #notFoundMsg {
-      display: none;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 18px 20px;
-      border-radius: 18px;
-      background: rgba(255,126,147,0.08);
-      border: 1px solid rgba(255,126,147,0.22);
+      display: none; align-items: flex-start; gap: 14px;
+      padding: 18px 20px; border-radius: 18px;
+      background: rgba(255,126,147,0.08); border: 1px solid rgba(255,126,147,0.22);
     }
-
     #notFoundMsg.visible { display: flex; }
-
-    .nf-icon {
-      font-size: 1.6rem;
-      line-height: 1;
-      flex: none;
-    }
-
-    .nf-text strong {
-      display: block;
-      font-size: 0.95rem;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .nf-text span {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .nf-icon { font-size: 1.6rem; line-height: 1; flex: none; }
+    .nf-text strong { display: block; font-size: 0.95rem; color: var(--text); margin-bottom: 4px; }
+    .nf-text span { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
 
     /* ── Modal ── */
     #invitationModal .modal-dialog {
       width: min(360px, calc(100vw - 24px));
       padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      display: flex; flex-direction: column; gap: 10px;
       overflow: hidden;
       background: rgba(255,252,245,0.92);
       backdrop-filter: blur(24px);
@@ -139,43 +78,57 @@
       max-height: calc(100vh - 24px);
     }
 
-    .inv-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex: none;
-    }
-
-    .inv-toolbar-name {
-      margin: 0;
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-size: clamp(1.2rem, 3vw, 1.6rem);
-      line-height: 1;
-      color: #3b2a14;
-    }
-
+    .inv-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex: none; }
+    .inv-toolbar-name { margin: 0; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.2rem, 3vw, 1.6rem); line-height: 1; color: #3b2a14; }
     .inv-toolbar-actions { display: flex; gap: 8px; flex: none; }
 
-    /* ── Card 9:16 ── */
+    /* ── Card base (9:16) ── */
     #exportCard {
-      flex: 1;
-      min-height: 0;
-      aspect-ratio: 9 / 16;
-      width: 100%;
-      border-radius: 18px;
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      flex-direction: column;
+      flex: 1; min-height: 0;
+      aspect-ratio: 9 / 16; width: 100%;
+      border-radius: 18px; overflow: hidden;
+      position: relative; display: flex; flex-direction: column;
       font-family: "Cormorant Garamond", Georgia, serif;
+      box-shadow: 0 24px 60px rgba(160,100,30,0.2);
+      /* default: student parchment */
       background:
         radial-gradient(ellipse at 18% 12%, rgba(255,220,160,0.55) 0%, transparent 46%),
         radial-gradient(ellipse at 82% 88%, rgba(255,160,175,0.38) 0%, transparent 42%),
         radial-gradient(ellipse at 60% 40%, rgba(255,235,200,0.3) 0%, transparent 55%),
         linear-gradient(155deg, #fdf6e8 0%, #fef0d6 35%, #fde8d0 68%, #fdf2e4 100%);
-      box-shadow: 0 24px 60px rgba(160,100,30,0.2);
     }
+
+    /* Teacher golden override */
+    #exportCard.teacher-card {
+      background:
+        radial-gradient(ellipse at 15% 10%, rgba(255,215,80,0.55) 0%, transparent 44%),
+        radial-gradient(ellipse at 85% 85%, rgba(212,141,49,0.45) 0%, transparent 42%),
+        radial-gradient(ellipse at 55% 45%, rgba(255,235,120,0.28) 0%, transparent 52%),
+        linear-gradient(155deg, #fdf3c8 0%, #fde98a 28%, #f5d060 58%, #faedb0 100%);
+      box-shadow: 0 24px 60px rgba(180,130,10,0.28);
+    }
+
+    #exportCard.teacher-card .ec-frame       { border-color: rgba(160,100,10,0.38); }
+    #exportCard.teacher-card .ec-frame-inner { border-color: rgba(160,100,10,0.18); }
+    #exportCard.teacher-card .ec-corner-tl,
+    #exportCard.teacher-card .ec-corner-tr,
+    #exportCard.teacher-card .ec-corner-bl,
+    #exportCard.teacher-card .ec-corner-br   { border-color: rgba(150,90,5,0.65); }
+    #exportCard.teacher-card .ec-wash-top    { background: linear-gradient(180deg, rgba(255,210,30,0.3) 0%, transparent 100%); }
+    #exportCard.teacher-card .ec-eyebrow     { color: #7a4e00; }
+    #exportCard.teacher-card .ec-rule-diamond { background: #a06800; }
+    #exportCard.teacher-card .ec-rule::before,
+    #exportCard.teacher-card .ec-rule::after  { background: linear-gradient(90deg, transparent, rgba(140,90,5,0.45), transparent); }
+    #exportCard.teacher-card .ec-invite-line  { color: rgba(80,45,0,0.55); }
+    #exportCard.teacher-card .ec-dear         { color: #7a4e00; }
+    #exportCard.teacher-card .ec-name         { color: #3a1e00; }
+    #exportCard.teacher-card .ec-message      { color: rgba(60,35,0,0.72); }
+    #exportCard.teacher-card .ec-detail       { background: rgba(255,240,150,0.55); border-color: rgba(160,100,10,0.22); }
+    #exportCard.teacher-card .ec-detail-label { color: #7a4e00; }
+    #exportCard.teacher-card .ec-detail-value { color: #3a1e00; }
+    #exportCard.teacher-card .ec-footer       { border-top-color: rgba(150,90,5,0.22); }
+    #exportCard.teacher-card .ec-footer-left  { color: rgba(80,45,0,0.5); }
+    #exportCard.teacher-card .ec-footer-heart { color: #c8780a; }
 
     .ec-texture {
       position: absolute; inset: 0; pointer-events: none;
@@ -183,40 +136,33 @@
         repeating-linear-gradient(0deg, rgba(180,130,60,0.04) 0px, transparent 1px, transparent 18px),
         repeating-linear-gradient(90deg, rgba(180,130,60,0.03) 0px, transparent 1px, transparent 18px);
     }
-
-    .ec-frame { position: absolute; inset: 12px; border: 1px solid rgba(180,120,40,0.22); border-radius: 10px; pointer-events: none; }
-    .ec-frame-inner { position: absolute; inset: 16px; border: 1px solid rgba(180,120,40,0.1); border-radius: 7px; pointer-events: none; }
+    .ec-frame       { position: absolute; inset: 12px; border: 1px solid rgba(180,120,40,0.22); border-radius: 10px; pointer-events: none; }
+    .ec-frame-inner { position: absolute; inset: 16px; border: 1px solid rgba(180,120,40,0.1);  border-radius: 7px;  pointer-events: none; }
 
     .ec-corner { position: absolute; width: 22px; height: 22px; pointer-events: none; }
-    .ec-corner-tl { top: 18px; left: 18px; border-top: 1.5px solid rgba(180,120,40,0.5); border-left: 1.5px solid rgba(180,120,40,0.5); }
-    .ec-corner-tr { top: 18px; right: 18px; border-top: 1.5px solid rgba(180,120,40,0.5); border-right: 1.5px solid rgba(180,120,40,0.5); }
-    .ec-corner-bl { bottom: 18px; left: 18px; border-bottom: 1.5px solid rgba(180,120,40,0.5); border-left: 1.5px solid rgba(180,120,40,0.5); }
-    .ec-corner-br { bottom: 18px; right: 18px; border-bottom: 1.5px solid rgba(180,120,40,0.5); border-right: 1.5px solid rgba(180,120,40,0.5); }
+    .ec-corner-tl { top: 18px;    left: 18px;  border-top:    1.5px solid rgba(180,120,40,0.5); border-left:   1.5px solid rgba(180,120,40,0.5); }
+    .ec-corner-tr { top: 18px;    right: 18px; border-top:    1.5px solid rgba(180,120,40,0.5); border-right:  1.5px solid rgba(180,120,40,0.5); }
+    .ec-corner-bl { bottom: 18px; left: 18px;  border-bottom: 1.5px solid rgba(180,120,40,0.5); border-left:   1.5px solid rgba(180,120,40,0.5); }
+    .ec-corner-br { bottom: 18px; right: 18px; border-bottom: 1.5px solid rgba(180,120,40,0.5); border-right:  1.5px solid rgba(180,120,40,0.5); }
 
     .ec-wash-top { position: absolute; top: 0; left: 0; right: 0; height: 38%; pointer-events: none; background: linear-gradient(180deg, rgba(255,210,140,0.22) 0%, transparent 100%); }
 
-    .ec-content {
-      position: relative; z-index: 2;
-      display: flex; flex-direction: column;
-      height: 100%; padding: 28px 26px 24px; overflow: hidden;
-    }
+    .ec-content { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; padding: 28px 26px 24px; overflow: hidden; }
 
-    .ec-eyebrow { font-family: "Manrope", sans-serif; font-size: 0.52rem; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase; color: #b87c28; margin: 0 0 10px; }
-
-    .ec-rule { display: flex; align-items: center; gap: 8px; flex: none; margin: 10px 0; }
+    .ec-eyebrow     { font-family: "Manrope", sans-serif; font-size: 0.52rem; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase; color: #b87c28; margin: 0 0 10px; }
+    .ec-rule        { display: flex; align-items: center; gap: 8px; flex: none; margin: 10px 0; }
     .ec-rule::before, .ec-rule::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(180,120,40,0.35), transparent); }
     .ec-rule-diamond { width: 5px; height: 5px; background: #c8922a; transform: rotate(45deg); flex: none; opacity: 0.6; }
-
     .ec-invite-line { margin: 0 0 8px; font-style: italic; font-size: 0.9rem; color: rgba(80,50,15,0.5); font-weight: 500; text-align: center; }
-    .ec-dear { margin: 0 0 3px; font-family: "Manrope", sans-serif; font-size: 0.54rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: #b87c28; }
-    .ec-name { margin: 0 0 2px; font-family: "Playfair Display", Georgia, serif; font-size: clamp(2rem, 7.5vw, 2.8rem); font-weight: 700; line-height: 0.94; color: #2c1a06; letter-spacing: -0.01em; }
-    .ec-message { margin: 0; font-size: 0.78rem; line-height: 1.6; color: rgba(50,30,8,0.68); font-weight: 500; font-family: "Cormorant Garamond", Georgia, serif; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 8; }
-    .ec-spacer { flex: 1; }
-    .ec-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: none; }
-    .ec-detail { padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,0.55); border: 1px solid rgba(180,120,40,0.16); }
+    .ec-dear        { margin: 0 0 3px; font-family: "Manrope", sans-serif; font-size: 0.54rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: #b87c28; }
+    .ec-name        { margin: 0 0 2px; font-family: "Playfair Display", Georgia, serif; font-size: clamp(2rem, 7.5vw, 2.8rem); font-weight: 700; line-height: 0.94; color: #2c1a06; letter-spacing: -0.01em; }
+    .ec-message     { margin: 0; font-size: 0.78rem; line-height: 1.6; color: rgba(50,30,8,0.68); font-weight: 500; font-family: "Cormorant Garamond", Georgia, serif; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 8; }
+    .ec-spacer      { flex: 1; }
+    .ec-details     { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: none; }
+    .ec-detail      { padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,0.55); border: 1px solid rgba(180,120,40,0.16); }
     .ec-detail-label { display: block; font-family: "Manrope", sans-serif; font-size: 0.5rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: #b87c28; margin-bottom: 4px; }
     .ec-detail-value { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 0.92rem; font-weight: 600; color: #2c1a06; line-height: 1.2; }
-    .ec-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(180,120,40,0.18); flex: none; }
+    .ec-footer      { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(180,120,40,0.18); flex: none; }
     .ec-footer-left { font-family: "Manrope", sans-serif; font-size: 0.5rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(80,50,15,0.45); }
     .ec-footer-heart { font-size: 0.9rem; color: #e8607a; line-height: 1; }
   </style>
@@ -245,7 +191,6 @@
             <input id="nameInput" type="text" placeholder="e.g. Aditya Shah" autocomplete="off" maxlength="60" />
           </div>
 
-          <!-- Not-found feedback -->
           <div id="notFoundMsg">
             <span class="nf-icon">😔</span>
             <div class="nf-text">
@@ -287,15 +232,15 @@
           <p class="ec-eyebrow">Farewell · BIM 2021 Batch · Mechi Multiple Campus</p>
           <div class="ec-rule"><div class="ec-rule-diamond"></div></div>
           <p class="ec-invite-line">You are cordially invited</p>
-          <p class="ec-dear">Dear</p>
-          <h2 id="cardName" class="ec-name">Senior Name</h2>
+          <p class="ec-dear" id="cardDear">Dear</p>
+          <h2 id="cardName" class="ec-name">Name</h2>
           <div class="ec-rule" style="margin:10px 0 8px"><div class="ec-rule-diamond"></div></div>
           <p id="cardMessage" class="ec-message"></p>
           <div class="ec-spacer"></div>
           <div class="ec-details">
             <div class="ec-detail">
               <span class="ec-detail-label">When</span>
-              <span class="ec-detail-value">Ashad 29, 2082</span>
+              <span class="ec-detail-value">Ashad 22, 2082</span>
             </div>
             <div class="ec-detail">
               <span class="ec-detail-label">Where</span>
@@ -303,7 +248,7 @@
             </div>
           </div>
           <div class="ec-footer">
-            <span class="ec-footer-left">With love, your juniors</span>
+            <span class="ec-footer-left" id="cardFooter">With love, your juniors</span>
             <span class="ec-footer-heart">♥</span>
           </div>
         </div>
@@ -317,22 +262,27 @@
   <script>
     const SUPABASE_URL = "https://cldsvijsoippqzxzdvrk.supabase.co";
     const SUPABASE_KEY = "sb_publishable_722ZBNZSU1EOC1hW0ZQsvw_BnvFoG-O";
-    const MESSAGE = "With hearts full of gratitude, we invite you to a farewell that carries the memories you helped create. You guided us through campus life with patience, kindness, and care, and you made Mechi Campus feel like home. Please join us as we celebrate your journey, our memories, and the bond we will always treasure.";
+
+    const MSG_SENIOR  = "With hearts full of gratitude, we invite you to a farewell that carries the memories you helped create. You guided us through campus life with patience, kindness, and care, and you made Mechi Campus feel like home. Please join us as we celebrate your journey, our memories, and the bond we will always treasure.";
+    const MSG_TEACHER = "It is with the deepest respect and heartfelt gratitude that we invite you to our farewell celebration. Your wisdom, dedication, and unwavering support have shaped us into who we are today. Every lesson you taught went far beyond the classroom — you inspired us to dream bigger, work harder, and carry ourselves with integrity. Please grace us with your presence as we honour the journey we have shared together.";
 
     const modal       = document.getElementById("invitationModal");
     const modalTitle  = document.getElementById("modalTitle");
+    const cardDear    = document.getElementById("cardDear");
     const cardName    = document.getElementById("cardName");
     const cardMessage = document.getElementById("cardMessage");
+    const cardFooter  = document.getElementById("cardFooter");
     const downloadBtn = document.getElementById("downloadButton");
     const exportCard  = document.getElementById("exportCard");
     const nameInput   = document.getElementById("nameInput");
     const generateBtn = document.getElementById("generateBtn");
     const notFoundMsg = document.getElementById("notFoundMsg");
 
-    let downloadURL  = null;
-    let matchedName  = null;
+    let downloadURL = null;
+    let matchedName = null;
+    let matchedRole = null;  // 'senior' | 'teacher'
 
-    // ── Senior list (from seniors.csv) ──
+    // ── Lists ──
     const SENIORS = [
       "AADESH KC","AAYUSHMA BARAL","ABISHEK NIROULA","ADITYA SHAH",
       "ANAMIKA REGMI","ANKIT ACHARYA","ANKIT RAJ KADEL","ARYAN KHADKA",
@@ -350,18 +300,28 @@
       "YAMUNA ADHIKARI","YOJANA POUDEL"
     ];
 
-    // ── Normalize: lowercase + collapse spaces ──
+    const TEACHERS = [
+      "Harish Luitel","Bishal Ghimire","Pramod Kumar Soni","Prakash koirala",
+      "Raju Poudel","Sunil Sharma","Sameer Sitoula","Nagendra Prasain",
+      "Kavita Poudyal","Rajendra Adhikari","Shital Kumar Mandal","Samjhana Budhathoki",
+      "Pankaj Uprety","Krishna Prasad Acharya","Karna Tamang"
+    ];
+
     function normalize(s) {
       return s.toLowerCase().replace(/\s+/g, " ").trim();
     }
 
-    function findMatch(input) {
+    function findPerson(input) {
       const key = normalize(input);
-      return SENIORS.find(s => normalize(s) === key) || null;
+      const senior  = SENIORS.find(s => normalize(s) === key);
+      if (senior)  return { name: senior,  role: "senior" };
+      const teacher = TEACHERS.find(t => normalize(t) === key);
+      if (teacher) return { name: teacher, role: "teacher" };
+      return null;
     }
 
-    // ── Log to Supabase invitation_attempts table ──
-    async function logAttempt(enteredName, status, resolvedName) {
+    // ── Supabase log ──
+    async function logAttempt(enteredName, status, resolvedName, role) {
       try {
         await fetch(`${SUPABASE_URL}/rest/v1/invitation_attempts`, {
           method: "POST",
@@ -372,9 +332,10 @@
             "Prefer": "return=minimal"
           },
           body: JSON.stringify({
-            entered_name:  enteredName,
-            matched_name:  resolvedName || null,
+            entered_name: enteredName,
+            matched_name: resolvedName || null,
             status,
+            role: role || null,
             page: "testinvitation.html",
             ts: new Date().toISOString()
           })
@@ -382,11 +343,19 @@
       } catch {}
     }
 
-    // ── Generate card ──
-    async function openCard(name) {
+    // ── Open card ──
+    async function openCard(name, role) {
+      const isTeacher = role === "teacher";
+
+      // Theme
+      exportCard.classList.toggle("teacher-card", isTeacher);
+
+      // Content
       modalTitle.textContent  = name;
       cardName.textContent    = name;
-      cardMessage.textContent = MESSAGE;
+      cardDear.textContent    = isTeacher ? "Respected" : "Dear";
+      cardMessage.textContent = isTeacher ? MSG_TEACHER : MSG_SENIOR;
+      cardFooter.textContent  = isTeacher ? "With respect & gratitude, BIM 2021 Batch" : "With love, your juniors";
 
       modal.classList.remove("hidden");
       modal.setAttribute("aria-hidden", "false");
@@ -415,55 +384,42 @@
       modal.setAttribute("aria-hidden", "true");
       if (downloadURL) { URL.revokeObjectURL(downloadURL); downloadURL = null; }
       matchedName = null;
+      matchedRole = null;
     }
 
-    // ── Generate button ──
     generateBtn.addEventListener("click", async () => {
       const entered = nameInput.value.trim();
       if (!entered) { nameInput.focus(); return; }
 
       notFoundMsg.classList.remove("visible");
 
-      const found = findMatch(entered);
+      const found = findPerson(entered);
 
       if (found) {
-        matchedName = found;
-        await logAttempt(entered, "generated", found);
-        openCard(found);
+        matchedName = found.name;
+        matchedRole = found.role;
+        await logAttempt(entered, "generated", found.name, found.role);
+        openCard(found.name, found.role);
       } else {
-        await logAttempt(entered, "not_found", null);
+        await logAttempt(entered, "not_found", null, null);
         notFoundMsg.classList.add("visible");
       }
     });
 
-    nameInput.addEventListener("keydown", e => {
-      if (e.key === "Enter") generateBtn.click();
-    });
+    nameInput.addEventListener("keydown", e => { if (e.key === "Enter") generateBtn.click(); });
+    nameInput.addEventListener("input",   () => notFoundMsg.classList.remove("visible"));
 
-    // Hide not-found message when user starts typing again
-    nameInput.addEventListener("input", () => {
-      notFoundMsg.classList.remove("visible");
-    });
-
-    // ── Download button ──
     downloadBtn.addEventListener("click", async () => {
       if (!downloadURL || !matchedName) return;
-
-      await logAttempt(nameInput.value.trim(), "downloaded", matchedName);
-
+      await logAttempt(nameInput.value.trim(), "downloaded", matchedName, matchedRole);
       const a = document.createElement("a");
       a.href     = downloadURL;
       a.download = `Farewell-BIM-2021-${matchedName.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}.jpeg`;
       a.click();
     });
 
-    modal.addEventListener("click", e => {
-      if (e.target.hasAttribute("data-close-modal")) closeCard();
-    });
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape") closeCard();
-    });
+    modal.addEventListener("click", e => { if (e.target.hasAttribute("data-close-modal")) closeCard(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closeCard(); });
   </script>
 </body>
 </html>

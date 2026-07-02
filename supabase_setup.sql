@@ -24,6 +24,7 @@ create table if not exists invitation_attempts (
   entered_name  text        not null,
   matched_name  text,
   status        text        not null,   -- 'generated' | 'not_found' | 'downloaded'
+  role          text,                   -- 'senior' | 'teacher' | null
   page          text,
   ts            timestamptz default now()
 );
