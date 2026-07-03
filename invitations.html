@@ -94,6 +94,9 @@
           <p id="notFoundMsg" style="display:none;margin:0;font-size:0.82rem;color:#c0304a;font-weight:700">
             ✕ Name not found. Please check spelling and try again.
           </p>
+          <p id="organizerMsg" style="display:none;margin:0;font-size:1rem;color:#3b2a14;font-weight:700;font-family:'Cormorant Garamond',Georgia,serif;line-height:1.6;padding:14px 16px;border-radius:14px;background:rgba(255,220,140,0.28);border:1px solid rgba(180,120,40,0.22);">
+            🎉 Hamro ali paxi la aile senior lai bida garum
+          </p>
         </div>
       </section>
     </main>
@@ -180,6 +183,22 @@
       "Pankaj Uprety","Krishna Prasad Acharya","Karna Tamang"
     ];
 
+    const ORGANIZERS = [
+      "ABISHKAR GHIMIRE","ANISH BAJGAIN","ANKITA MANI","AYUSH MALLA",
+      "AYUSHA NEPAL","BASUDEV KHATIWADA","BHAWANA DAHAL","BONISHA NIROULA",
+      "ISHAN POKHAREL","JOSHIL DAHAL","KARUN NEPAL","KHUSHBU RAJBANSHI",
+      "KHUSHI KUMARI THAKUR","KUSHAL KAFLE","LIZA SHAH KALWAR","MAMATA RAJBANSHI",
+      "MANISH GAUTAM","MANISH GIRI","MANISH POKHREL","MANITA GAUTAM",
+      "MANITA NEUPANE","NABIN OJHA","NISHA ADHIKARI","NITESH CHAPAGAIN",
+      "OJASWI NEPAL","PADAM PRASAD DHAKAL","PRABINA GHIMIRE","PRAHLAD CHAUHAN",
+      "PRAJWAL KUNWAR","PRANAV BHATTARAI","PRASHANT DHAKAL","PRAYUSH PAUDYAL",
+      "PRIYA GIRI","RISHAB ACHARYA","RK YUGAL NIROULA","ROSHAN RAJBANSHI",
+      "SAHIL KUMAR KHATRI","SAMIKSHYA PARAJULI","SAMIR CHAPAGAIN","SANCHITA REGMI",
+      "SANDHYA GAUTAM","SAUGAT CHAMLAGAIN","SAURAB DHAKAL","SAURAV CHUHAN",
+      "SHREYA BANIYA","SIMON SHRESTHA","SOVAN SOREN","SUGAM BISTA",
+      "SUJIT KUMAR SHAH","SUSHANT NEPAL","VINAY POUDYAL"
+    ];
+
     const exportCard  = document.getElementById("exportCard");
     const modal       = document.getElementById("invitationModal");
     const modalTitle  = document.getElementById("modalTitle");
@@ -190,7 +209,8 @@
     const downloadBtn = document.getElementById("downloadButton");
     const searchInput = document.getElementById("searchInput");
     const findBtn     = document.getElementById("findBtn");
-    const notFoundMsg = document.getElementById("notFoundMsg");
+    const notFoundMsg  = document.getElementById("notFoundMsg");
+    const organizerMsg = document.getElementById("organizerMsg");
 
     let selectedName = null;
     let selectedRole = null;
@@ -304,8 +324,18 @@
 
     function handleFind() {
       var input = searchInput.value.trim();
-      notFoundMsg.style.display = "none";
+      notFoundMsg.style.display  = "none";
+      organizerMsg.style.display = "none";
       if (!input) return;
+
+      var key = normalize(input);
+
+      // Check organizers first — show message, no card
+      var isOrganizer = ORGANIZERS.some(function(n) { return normalize(n) === key; });
+      if (isOrganizer) {
+        organizerMsg.style.display = "block";
+        return;
+      }
 
       var found = findPerson(input);
       if (found) {
@@ -324,7 +354,8 @@
     });
 
     searchInput.addEventListener("input", function() {
-      notFoundMsg.style.display = "none";
+      notFoundMsg.style.display  = "none";
+      organizerMsg.style.display = "none";
     });
 
     modal.addEventListener("click", function(e) {
