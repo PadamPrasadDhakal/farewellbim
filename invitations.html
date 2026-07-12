@@ -53,21 +53,22 @@
     .ec-corner-br { bottom: 18px; right: 18px; border-bottom: 1.5px solid rgba(180,120,40,0.5); border-right: 1.5px solid rgba(180,120,40,0.5); }
     .ec-wash-top { position: absolute; top: 0; left: 0; right: 0; height: 38%; pointer-events: none; background: linear-gradient(180deg, rgba(255,210,140,0.22) 0%, transparent 100%); }
     .ec-content { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; padding: 28px 26px 24px; overflow: hidden; }
-    .ec-eyebrow { font-family: "Manrope", sans-serif; font-size: 0.52rem; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase; color: #b87c28; margin: 0 0 10px; }
+    #exportCard { --ec-accent: #b87c28; --ec-name-color: #2c1a06; --ec-msg-color: rgba(50,30,8,0.68); --ec-detail-bg: rgba(255,255,255,0.55); --ec-footer-color: rgba(80,50,15,0.45); }
+    .ec-eyebrow { font-family: "Manrope", sans-serif; font-size: 0.52rem; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ec-accent); margin: 0 0 10px; }
     .ec-rule { display: flex; align-items: center; gap: 8px; flex: none; margin: 10px 0; }
     .ec-rule::before, .ec-rule::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(180,120,40,0.35), transparent); }
-    .ec-rule-diamond { width: 5px; height: 5px; background: #c8922a; transform: rotate(45deg); flex: none; opacity: 0.6; }
-    .ec-invite-line { margin: 0 0 8px; font-style: italic; font-size: 0.9rem; color: rgba(80,50,15,0.5); font-weight: 500; text-align: center; }
-    .ec-dear { margin: 0 0 3px; font-family: "Manrope", sans-serif; font-size: 0.54rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: #b87c28; }
-    .ec-name { margin: 0 0 2px; font-family: "Playfair Display", Georgia, serif; font-size: clamp(2rem, 7.5vw, 2.8rem); font-weight: 700; line-height: 0.94; color: #2c1a06; letter-spacing: -0.01em; }
-    .ec-message { margin: 0; font-size: 0.78rem; line-height: 1.6; color: rgba(50,30,8,0.68); font-weight: 500; font-family: "Cormorant Garamond", Georgia, serif; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 8; }
+    .ec-rule-diamond { width: 5px; height: 5px; background: var(--ec-accent); transform: rotate(45deg); flex: none; opacity: 0.6; }
+    .ec-invite-line { margin: 0 0 8px; font-style: italic; font-size: 0.9rem; color: var(--ec-footer-color); font-weight: 500; text-align: center; }
+    .ec-dear { margin: 0 0 3px; font-family: "Manrope", sans-serif; font-size: 0.54rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ec-accent); }
+    .ec-name { margin: 0 0 2px; font-family: "Playfair Display", Georgia, serif; font-size: clamp(2rem, 7.5vw, 2.8rem); font-weight: 700; line-height: 0.94; color: var(--ec-name-color); letter-spacing: -0.01em; }
+    .ec-message { margin: 0; font-size: 0.78rem; line-height: 1.6; color: var(--ec-msg-color); font-weight: 500; font-family: "Cormorant Garamond", Georgia, serif; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 8; }
     .ec-spacer { flex: 1; }
     .ec-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: none; }
-    .ec-detail { padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,0.55); border: 1px solid rgba(180,120,40,0.16); }
-    .ec-detail-label { display: block; font-family: "Manrope", sans-serif; font-size: 0.5rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: #b87c28; margin-bottom: 4px; }
-    .ec-detail-value { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 0.92rem; font-weight: 600; color: #2c1a06; line-height: 1.2; }
+    .ec-detail { padding: 10px 12px; border-radius: 10px; background: var(--ec-detail-bg); border: 1px solid rgba(180,120,40,0.16); }
+    .ec-detail-label { display: block; font-family: "Manrope", sans-serif; font-size: 0.5rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ec-accent); margin-bottom: 4px; }
+    .ec-detail-value { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 0.92rem; font-weight: 600; color: var(--ec-name-color); line-height: 1.2; }
     .ec-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(180,120,40,0.18); flex: none; }
-    .ec-footer-left { font-family: "Manrope", sans-serif; font-size: 0.5rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(80,50,15,0.45); }
+    .ec-footer-left { font-family: "Manrope", sans-serif; font-size: 0.5rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ec-footer-color); }
     .ec-footer-heart { font-size: 0.9rem; color: #e8607a; line-height: 1; }
   </style>
 </head>
@@ -93,9 +94,6 @@
           </div>
           <p id="notFoundMsg" style="display:none;margin:0;font-size:0.82rem;color:#c0304a;font-weight:700">
             ✕ Name not found. Please check spelling and try again.
-          </p>
-          <p id="organizerMsg" style="display:none;margin:0;font-size:1rem;color:#3b2a14;font-weight:700;font-family:'Cormorant Garamond',Georgia,serif;line-height:1.6;padding:14px 16px;border-radius:14px;background:rgba(255,220,140,0.28);border:1px solid rgba(180,120,40,0.22);">
-            🎉 Hamro ali paxi la aile senior lai bida garum
           </p>
         </div>
       </section>
@@ -156,8 +154,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="tracker.js"></script>
   <script>
-    const MSG_SENIOR  = "With hearts full of gratitude, we invite you to a farewell that carries the memories you helped create. You guided us through campus life with patience, kindness, and care, and you made Mechi Campus feel like home. Please join us as we celebrate your journey, our memories, and the bond we will always treasure.";
-    const MSG_TEACHER = "It is with the deepest respect and heartfelt gratitude that we invite you to our farewell celebration. Your wisdom, dedication, and unwavering support have shaped us into who we are today. Every lesson you taught went far beyond the classroom — you inspired us to dream bigger, work harder, and carry ourselves with integrity. Please grace us with your presence as we honour the journey we have shared together.";
+    const MSG_SENIOR    = "With hearts full of gratitude, we invite you to a farewell that carries the memories you helped create. You guided us through campus life with patience, kindness, and care, and you made Mechi Campus feel like home. Please join us as we celebrate your journey, our memories, and the bond we will always treasure.";
+    const MSG_TEACHER   = "It is with the deepest respect and heartfelt gratitude that we invite you to our farewell celebration. Your wisdom, dedication, and unwavering support have shaped us into who we are today. Every lesson you taught went far beyond the classroom — you inspired us to dream bigger, work harder, and carry ourselves with integrity. Please grace us with your presence as we honour the journey we have shared together.";
+    const MSG_ORGANIZER = "This farewell would not exist without you. Every decoration placed, every detail planned, every late night spent — it was all you. You turned an idea into something beautiful, and the seniors will carry this memory for a lifetime. This card is a small token of the immense gratitude we hold for everything you have done. Thank you for making it happen.";
 
     const SENIORS = [
       "AADESH KC","AAYUSHMA BARAL","ABISHEK NIROULA","ADITYA SHAH",
@@ -174,6 +173,18 @@
       "SANJAY RAJBANSHI","SAURAV OSTI","SHRADDHA PYAKUREL","SHREYA THAMI",
       "SITA DEVI RAJBANSHI","SOMU KUNDU","SUNAINA MANDAL","SUPRIYA ACHARYA",
       "YAMUNA ADHIKARI","YOJANA POUDEL","Predikshya Karki","Sudip Limbu","Resika Pokhrel",
+      
+    ];
+
+    const TEACHERS = [
+      "Harish Luitel","Bishal Ghimire","Pramod Kumar Soni","Prakash koirala",
+      "Raju Poudel","Sunil Sharma","Sameer Sitoula","Nagendra Prasain",
+      "Kavita Poudyal","Rajendra Adhikari","Shital Kumar Mandal","Samjhana Budhathoki",
+      "Pankaj Uprety","Krishna Prasad Acharya","Karna Tamang","Devi Prasad Acharya","Samjhana Budhathoki",
+      "Ankit Chapagain"
+    ];
+
+    const ORGANIZERS = [
       "ABISHKAR GHIMIRE","ANISH BAJGAIN","ANKITA MANI","AYUSH MALLA",
       "AYUSHA NEPAL","BASUDEV KHATIWADA","BHAWANA DAHAL","BONISHA NIROULA",
       "ISHAN POKHAREL","JOSHIL DAHAL","KARUN NEPAL","KHUSHBU RAJBANSHI",
@@ -189,17 +200,6 @@
       "SUJIT KUMAR SHAH","SUSHANT NEPAL","VINAY POUDYAL"
     ];
 
-    const TEACHERS = [
-      "Harish Luitel","Bishal Ghimire","Pramod Kumar Soni","Prakash koirala",
-      "Raju Poudel","Sunil Sharma","Sameer Sitoula","Nagendra Prasain",
-      "Kavita Poudyal","Rajendra Adhikari","Shital Kumar Mandal","Samjhana Budhathoki",
-      "Pankaj Uprety","Krishna Prasad Acharya","Karna Tamang","Devi Prasad Acharya","Samjhana Budhathoki"
-    ];
-
-    const ORGANIZERS = [
-      "Hello test"
-    ];
-
     const exportCard  = document.getElementById("exportCard");
     const modal       = document.getElementById("invitationModal");
     const modalTitle  = document.getElementById("modalTitle");
@@ -211,7 +211,6 @@
     const searchInput = document.getElementById("searchInput");
     const findBtn     = document.getElementById("findBtn");
     const notFoundMsg  = document.getElementById("notFoundMsg");
-    const organizerMsg = document.getElementById("organizerMsg");
 
     let selectedName = null;
     let selectedRole = null;
@@ -227,6 +226,8 @@
       if (s) return { name: s, role: "senior" };
       const t = TEACHERS.find(n => normalize(n) === key);
       if (t) return { name: t, role: "teacher" };
+      const o = ORGANIZERS.find(n => normalize(n) === key);
+      if (o) return { name: o, role: "organizer" };
       return null;
     }
 
@@ -258,6 +259,20 @@
           "radial-gradient(ellipse at 55% 45%, rgba(255,235,120,0.28) 0%, transparent 52%)",
           "linear-gradient(155deg, #fdf3c8 0%, #fde98a 28%, #f5d060 58%, #faedb0 100%)"
         ].join(",");
+        exportCard.style.setProperty("--ec-accent", "#b87c28");
+        exportCard.style.setProperty("--ec-name-color", "#2c1a06");
+      } else if (role === "organizer") {
+        exportCard.style.background = [
+          "radial-gradient(ellipse at 15% 10%, rgba(120,100,220,0.45) 0%, transparent 44%)",
+          "radial-gradient(ellipse at 85% 85%, rgba(80,60,180,0.4) 0%, transparent 42%)",
+          "radial-gradient(ellipse at 55% 45%, rgba(160,140,255,0.2) 0%, transparent 52%)",
+          "linear-gradient(155deg, #1a1535 0%, #221a4a 30%, #1e1640 60%, #16122e 100%)"
+        ].join(",");
+        exportCard.style.setProperty("--ec-accent", "#a08cff");
+        exportCard.style.setProperty("--ec-name-color", "#e8e0ff");
+        exportCard.style.setProperty("--ec-msg-color", "rgba(220,210,255,0.75)");
+        exportCard.style.setProperty("--ec-detail-bg", "rgba(255,255,255,0.08)");
+        exportCard.style.setProperty("--ec-footer-color", "rgba(200,190,255,0.5)");
       } else {
         exportCard.style.background = [
           "radial-gradient(ellipse at 18% 12%, rgba(255,220,160,0.55) 0%, transparent 46%)",
@@ -265,6 +280,8 @@
           "radial-gradient(ellipse at 60% 40%, rgba(255,235,200,0.3) 0%, transparent 55%)",
           "linear-gradient(155deg, #fdf6e8 0%, #fef0d6 35%, #fde8d0 68%, #fdf2e4 100%)"
         ].join(",");
+        exportCard.style.setProperty("--ec-accent", "#b87c28");
+        exportCard.style.setProperty("--ec-name-color", "#2c1a06");
       }
     }
 
@@ -277,8 +294,8 @@
       modalTitle.textContent  = name;
       cardName.textContent    = name;
       cardDear.textContent    = role === "teacher" ? "Respected" : "Dear";
-      cardMessage.textContent = role === "teacher" ? MSG_TEACHER : MSG_SENIOR;
-      cardFooter.textContent  = role === "teacher" ? "With respect & gratitude, BIM 2021 Batch" : "With love, your juniors";
+      cardMessage.textContent = role === "teacher" ? MSG_TEACHER : role === "organizer" ? MSG_ORGANIZER : MSG_SENIOR;
+      cardFooter.textContent  = role === "teacher" ? "With respect & gratitude, BIM 2021 Batch" : role === "organizer" ? "With gratitude, BIM 2021 Batch" : "With love, your juniors";
 
       modal.classList.remove("hidden");
       modal.setAttribute("aria-hidden", "false");
@@ -326,17 +343,9 @@
     function handleFind() {
       var input = searchInput.value.trim();
       notFoundMsg.style.display  = "none";
-      organizerMsg.style.display = "none";
       if (!input) return;
 
       var key = normalize(input);
-
-      // Check organizers first — show message, no card
-      var isOrganizer = ORGANIZERS.some(function(n) { return normalize(n) === key; });
-      if (isOrganizer) {
-        organizerMsg.style.display = "block";
-        return;
-      }
 
       var found = findPerson(input);
       if (found) {
@@ -356,7 +365,6 @@
 
     searchInput.addEventListener("input", function() {
       notFoundMsg.style.display  = "none";
-      organizerMsg.style.display = "none";
     });
 
     modal.addEventListener("click", function(e) {
